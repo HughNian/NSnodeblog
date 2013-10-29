@@ -3,7 +3,10 @@ NSnodeblog
 
 create by HughNian hugh.nian@163.com    
 
-power by nodejs v 0.10.20,mongo DB
+power by nodejs v 0.10.20,redis,mongo DB   
+
+**mongo DB** use as Persistent storage   
+**redis** use as cache storage
 
 Introduction
 ------------
