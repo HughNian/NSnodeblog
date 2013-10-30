@@ -8,6 +8,7 @@ exports.config = {
   name: 'Love Life',
   debug: true,
   description: 'Love Life --Power by NSnodeblog',
+  keywords: 'Love Life',
   host: '127.0.0.1',
   version: '0.1.1',
 
@@ -15,8 +16,8 @@ exports.config = {
   upload_dir: path.join(__dirname+'/upload', 'public', 'user_data', 'images'),
 
   db: 'mongodb://127.0.0.1/node_club_dev',
-  session_secret: 'node_club',
-  auth_cookie_name: 'node_club',
+  session_secret: 'nodeblog',
+  auth_cookie_name: 'nodeblog',
   port: 3000,
 
   //列表显示文章个数
