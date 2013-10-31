@@ -15,7 +15,7 @@ exports.config = {
   //上穿文件目录
   upload_dir: path.join(__dirname+'/upload', 'public', 'user_data', 'images'),
 
-  db: 'mongodb://127.0.0.1/node_club_dev',
+  db: 'mongodb://127.0.0.1/nsweb',
   session_secret: 'nodeblog',
   auth_cookie_name: 'nodeblog',
   port: 3000,

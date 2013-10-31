@@ -29,7 +29,7 @@ app.use(express.bodyParser({ keepExtensions: true, uploadDir: config.upload_dir 
 app.use(express.cookieParser());
 app.use(express.session({
     secret: config.session_secret,
-    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30}//30 days
 }));
 app.use(app.router);
 
