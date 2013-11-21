@@ -1,0 +1,57 @@
+var models = require('../models');
+var User = models.User;
+
+/**
+ * @todo 通过用户名获取用户
+ *
+ *
+ */
+exports.getUserByNames = function(names, callback){
+   if(names.length === 0) {
+       return callback(null, []);	
+   }
+   User.find({name: {$in: names}}, callback);
+};
+
+/**
+ * 根据登录名查找用户
+ *
+ *
+ */
+exports.getUserByLoginName = function(loginName, callback){
+	User.findOne({'loginname': loginName}, callback);
+};
+
+/**
+ * 根据用户id, 查找用户
+ *
+ *
+ */
+exports.getUserById = function(id, callback){
+	User.findOne({_id:id}, callback);
+};
+
+/**
+ * 根据一些关键字，获取一组用户
+ *
+ *
+ */
+exports.getUsersByQuery = function(query, opt, callback){
+	User.find(query, [], opt, callback);
+};
+
+/**
+ * 保存用户
+ *
+ *
+ */
+exports.newAndSave = function(name, pass, email, avatar_url, signature, active, callback){
+	var user = new User();
+	user.name = name;
+	user.pass = pass;
+	user.email = email;
+	user.avatar = avatar_url;
+	user.active = false;
+	user.signature = signature
+	user.save(callback);
+};

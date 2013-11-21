@@ -1,13 +1,26 @@
 /*
- * routes.js
+ * routes/index.js
  *
  * site 路由文件
  *
  */
 var site = require('../controllers/site');
+var sign = require('../controllers/sign');
 
-module.exports = function(app) {
-    // home page
+module.exports = function(app, io) {
+    //首页
     app.get('/', site.index);
+    
+    //测试链接socket.io
+    io.on('connection', function (socket) {
+        socket.emit('open');
+    });
+    
+    //用户注册，登录，退出
+    app.get('/register', sign.showRegister);
+    app.post('/register', sign.register);
+    //app.get('/login', sign.showLogin);
+    //app.post('/login', sign.login);
+    //app.get('/logout', sign.logout);
 
-}
+};

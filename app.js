@@ -33,11 +33,13 @@ app.use(express.session({
 }));
 app.use(app.router);
 
-http.createServer(app).listen(config.port, function(){
+var server = http.createServer(app).listen(config.port, function(){
     console.log('Express server listening on port ' + config.port);
 });
 
+io = require('socket.io').listen(server);//初始化socket.io
 // routes
-routes(app);
+routes(app, io);
 
 module.exports = app;
+module.exports = io;

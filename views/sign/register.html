@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://xn--sqrw46l.com/register -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>注册</title>
+<link rel="stylesheet" type="text/css" href="/css/register.css">
+</head>
+<body huaban_screen_capture_injected="true" youdao="bind" style="">
+</div>
+<div id="container">
+  <div id="container_cover" style="display: none; top: 177px;"></div>
+  <h2 class="container_title font-icon">注册您的账号</h2>
+  <div class="wrap container_paper">
+  <form class='form-horizontal' action='/register' method='post'>
+      <% if (locals.error) { %>
+      <div class="alert alert-error">
+          <a class="close" data-dismiss="alert" href="#">&times;</a>
+          <b class="error"><%= error %></b>
+      </div>
+      <% } %>
+    <ul class="form font-icon">
+      <li>
+        <label for="email"><i>*</i>邮箱：</label>
+          <% if (locals.email) { %>
+          <input id="email" type="text" name="email" value="<%= email %>">
+          <% } else { %>
+          <input id="email" type="text" name="email" value="">
+          <% } %>
+      </li>
+      <li>
+        <label for="password"><i>*</i>密码：</label>
+        <input id="password" type="password" name="pass">
+        <div class="tip"></div>
+      </li>
+      <li>
+        <label for="password2"><i>*</i>确认密码：</label>
+        <input id="password2" type="password" name="re_pass">
+      </li>
+      <li>
+        <label for="name"><i>*</i>真实姓名：</label>
+          <% if (locals.name) { %>
+          <input id="name" type="text" name="name" value="<%= name %>">
+          <% } else { %>
+          <input id="name" type="text" name="name" value="">
+          <% } %>
+        <div class="tip"></div>
+      </li>
+      <li>
+        <label for="motto">介绍自己：</label>
+        <input id="motto" name="signature" type="text">
+      </li>
+    </ul>
+    <button id="submit" class="blue">注册</button>
+    </form>
+  </div>
+  <div class="clear"></div>
+  <div id="footer">
+  </div>
+  </div>
+</body>
+</html>

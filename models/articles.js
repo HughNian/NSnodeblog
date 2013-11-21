@@ -7,10 +7,10 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var ArticlesSchema = new Schema({
-    title: {type:String},
-    content: {type:String},
-    author_id: {type:ObjectId},
-    top:{type:Boolen, default: false},
+    title: {type: String},
+    content: {type: String},
+    author_id: {type: ObjectId},
+    top:{type:Boolean, default: false},
     reply_count: { type: Number, default: 0 },
     visit_count: { type: Number, default: 0 },
     create_at: { type: Date, default: Date.now },

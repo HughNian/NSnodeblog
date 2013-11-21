@@ -39,6 +39,7 @@
 			</div><!-- close POST -->
 
 			<aside>
+
 				<p class="meta">
 					<a href="http://wefriends001.diandian.com/post/2011-09-27/5352904">Sep 27, 2011</a><br>
 					<a href="http://wefriends001.diandian.com/post/2011-09-27/5352904#notes">0&nbsp;°C</a><br>	
@@ -591,7 +592,9 @@
 	<div id="sidebar_wrapper" style="height: 912px; top: 450px;">
 		<section id="sidebar">
 			<ul id="icons-nav">
-				<li class="profile"><a href="http://wefriends001.diandian.com/#">Profile</a></li>
+                <% if(is_login){ %>
+				 <li cass="profile"><a href="http://wefriends001.diandian.com/#">Profile</a></li>
+                <% } %>
 				<li class="pages"><a href="http://wefriends001.diandian.com/#">Pages</a></li>
 				
 			</ul>
@@ -627,13 +630,12 @@
 				<div class="jspContainer" style="width: 299px; height: 912px;"><div class="jspPane" style="padding: 40px 30px 100px; top: 0px; width: 239px;"><form id="searchForm" action="/images/TAKE360精品生活.htm" method="get">
 						<input id="searchField" type="text" name="q" onBlur="if (this.value == &#39;&#39;) {this.value = &#39;搜索&#39;;}" onFocus="if (this.value == &#39;搜索&#39;) {this.value = &#39;&#39;;}" value="搜索">
 					</form><ul>
+                        <% if(!is_login){ %>
+                        <li><a href="/register">注册</a></li>
+                        <li><a href="/login">登录</a></li>
+                        <% } %>
+
 						<li><a href="http://wefriends001.diandian.com/rss" title="RSS Feed">订阅</a></li>
-						
-						<li><a href="http://wefriends001.diandian.com/inbox">私信</a></li>
-						
-						
-						<li><a href="http://wefriends001.diandian.com/submit">投稿</a></li>
-						
 						
 					</ul></div></div></div><!-- close PAGES -->	
 			</div><!-- close PANELS -->

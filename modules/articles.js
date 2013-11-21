@@ -17,3 +17,16 @@ exports.getArticlesById = function(id , callback){
     var proxy = new EventProxy();
 
 };
+
+
+/*
+ * 添加文章
+ *
+ */
+exports.newAndSave = function (title, content, authorId, callback) {
+    var articles = new Articles();
+    articles.title = title;
+    articles.content = content;
+    articles.author_id = authorId;
+    articles.save(callback);
+};
