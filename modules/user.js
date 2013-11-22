@@ -2,7 +2,7 @@ var models = require('../models');
 var User = models.User;
 
 /**
- * @todo 通过用户名获取用户
+ * @todo 通过一组用户名获取用户
  *
  *
  */
@@ -11,6 +11,14 @@ exports.getUserByNames = function(names, callback){
        return callback(null, []);	
    }
    User.find({name: {$in: names}}, callback);
+};
+
+/**
+ * 通过一个用户名获取一条用户信息
+ *
+ */
+exports.getUserByName = function(name, callback){
+	User.findOne({'name': name}, callback);
 };
 
 /**
@@ -36,8 +44,8 @@ exports.getUserById = function(id, callback){
  *
  *
  */
-exports.getUsersByQuery = function(query, opt, callback){
-	User.find(query, [], opt, callback);
+exports.getUsersByQuery = function (query, callback) {
+  User.find(query, callback);
 };
 
 /**

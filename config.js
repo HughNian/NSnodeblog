@@ -16,8 +16,8 @@ exports.config = {
   upload_dir: path.join(__dirname+'/upload', 'public', 'user_data', 'images'),
 
   db: 'mongodb://127.0.0.1/nsweb',
-  session_secret: 'nodeblog',
-  auth_cookie_name: 'nodeblog',
+  session_secret: 'nsblog',
+  auth_cookie_name: 'nsblog',
   port: 3000,
 
   //列表显示文章个数

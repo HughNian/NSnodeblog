@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var config = require('../config').config;
 
 var UserSchema = new Schema({
-	name: {type:String, index:true},
+	name: {type:String, index:true, unique: true},
 	loginname: {type:String},
 	pass: {type: String},
 	email: {type: String, unique: true},

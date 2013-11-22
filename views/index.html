@@ -3,7 +3,7 @@
 	<header id="header" class="big-bg" style="height: 450px; background-position: 50% 0px;">
 		<div class="header-inner" style="margin-top: 0px; opacity: 1;">
 			<h1 id="title">
-				<a href="/images/TAKE360精品生活.htm">
+				<a href="/">
 					<font style="color:#000000;font-family: 'Flamenco', cursive;font-size:65;">Love Life</font>
 				</a>
 			</h1>
@@ -25,10 +25,6 @@
 						<a class="high-res view" rel="5a5b4d80-e90b-11e0-8ae1-782bcb3825eb" href="/images/76C93AFC408CDEE27C34BBA9CFE7777C_500_469.JPEG"><span class="zoom">Zoom</span></a>
 												
 					</div>
-					
-					
-					
-					
 				</div>
 				
 				
@@ -593,7 +589,7 @@
 		<section id="sidebar">
 			<ul id="icons-nav">
                 <% if(is_login){ %>
-				 <li cass="profile"><a href="http://wefriends001.diandian.com/#">Profile</a></li>
+				 <li class="profile"><a href="http://wefriends001.diandian.com/#">Profile</a></li>
                 <% } %>
 				<li class="pages"><a href="http://wefriends001.diandian.com/#">Pages</a></li>
 				
@@ -610,8 +606,12 @@
 					
 					
 				<div class="jspContainer" style="width: 299px; height: 912px;"><div class="jspPane" style="padding: 40px 30px 100px; top: 0px; width: 239px;"><div id="me" class="me">
-						<img id="avatar" src="/images/EEA6ED71C1522729C18A55A9E3BDAE57_200_204.jpg" alt="TAKE360精品生活" style="min-width: 150px; min-height: 150px">
-					</div><h2>关于我</h2><p style="word-wrap: break-word; line-height: 18px; font-size: 12px">爱生活，淡淡的文艺范</p><hr><ul id="social-icons">
+						<% if(userinfo){%>
+						  <img id="avatar" src="<%= userinfo.avatar%>" alt="<%= userinfo.name %>" style="min-width: 150px; min-height: 150px">
+						<% } else {%>
+						  <img id="avatar" src="/images/EEA6ED71C1522729C18A55A9E3BDAE57_200_204.jpg" alt="TAKE360精品生活" style="min-width: 150px; min-height: 150px">
+						<% } %>
+					</div><h2>关于我</h2><p style="word-wrap: break-word; line-height: 18px; font-size: 12px"><% if(userinfo){ %><%= userinfo.signature %><% } %></></p><hr><ul id="social-icons">
 						
 						
 						
@@ -636,6 +636,7 @@
                         <% } %>
 
 						<li><a href="http://wefriends001.diandian.com/rss" title="RSS Feed">订阅</a></li>
+						<li><a href="/logout" title="退出">退出</a></li>
 						
 					</ul></div></div></div><!-- close PAGES -->	
 			</div><!-- close PANELS -->

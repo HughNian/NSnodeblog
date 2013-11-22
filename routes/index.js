@@ -19,8 +19,8 @@ module.exports = function(app, io) {
     //用户注册，登录，退出
     app.get('/register', sign.showRegister);
     app.post('/register', sign.register);
-    //app.get('/login', sign.showLogin);
-    //app.post('/login', sign.login);
-    //app.get('/logout', sign.logout);
+    app.get('/login', sign.showLogin);
+    app.post('/login', sign.login);
+    app.get('/logout', sign.logout);
 
 };
