@@ -49,6 +49,16 @@ exports.getUsersByQuery = function (query, callback) {
 };
 
 /**
+ *
+ *
+ *
+ */
+exports.getUsersNoDel = function(status, name, callback)
+{
+   User.find({del_status: {$ne: status}, name: {$in: name}}, callback);
+};
+
+/**
  * 保存用户
  *
  *

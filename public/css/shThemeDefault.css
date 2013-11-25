@@ -115,3 +115,15 @@
 .syntaxhighlighter .keyword {
   font-weight: bold !important;
 }
+
+.picside {
+	display: block;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 55px;
+	height: 100%;
+	z-index: 9999;
+	background-size: cover;
+	border-left: #666 1px solid;
+}

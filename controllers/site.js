@@ -7,7 +7,7 @@ var config = require('../config').config;
 var url = require('url');
 
 exports.index = function (req, res) {
-	  //var oUrl = url.parse(req.url, true); // ½âÎöµ±Ç°URL
+	 //var oUrl = url.parse(req.url, true)
     //var is_login = oUrl.query.is_login ?  oUrl.query.is_login : 0;
     var cookies = {};
     req.headers.cookie && req.headers.cookie.split(';').forEach(function( cookie ) {

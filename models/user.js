@@ -25,6 +25,8 @@ var UserSchema = new Schema({
   is_star: {type: Boolean},
   level: {type: String},
   active: {type: Boolean, default: true},
+  is_online: {type: Boolean, default: false},
+  del_status: {type: Boolean, default: false}
 });
 
 mongoose.model('User', UserSchema);

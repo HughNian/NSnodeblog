@@ -94,7 +94,7 @@ exports.showLogin = function(req, res){
 exports.login = function(req, res, next){
 	var name = sanitize(req.body.name).trim().toLowerCase();
 	var pass = sanitize(req.body.pass).trim();
-	
+
 	if(!name || !pass){
 		return res.render('sign/login', {error: '信息不完整'});
 	}
