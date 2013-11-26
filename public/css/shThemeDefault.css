@@ -132,7 +132,8 @@
 .sendbox .boxtop {width:100%; height:35px; background:#CCC}
 .sendbox .boxtop span {float:right; margin-right: 15px; line-height:35px;}
 .sendbox .sendlist {width:100%; height:270px; background:#FFF}
-.sendbox .sendlist p {max-width: 250px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;}
+.sendbox .sendlist .p1 {float:right;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;}
+.sendbox .sendlist .p2 {float:left;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#CCC;}
 .sendbox .bar {width:100%; height:22px; background:#CCC}
 .sendbox .sendarea {width:100%; height:90px; background:#FFF}
 .sendbox .sendarea .area {overflow-y:auto;width:100%; height:90px; resize:none}

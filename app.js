@@ -38,6 +38,8 @@ var server = http.createServer(app).listen(config.port, function(){
 });
 
 io = require('socket.io').listen(server);//初始化socket.io
+io.set('log level', 0);
+
 // routes
 routes(app);
 

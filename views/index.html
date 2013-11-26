@@ -198,54 +198,9 @@ niansong
 <!-- close WRAPPER -->
 <footer id="footer"> </footer>
 <!-- close FOOTER --> 
-<script src="/js/plugins.js"></script> 
-<script src="/js/view.js"></script> 
+<script src="/js/plugins.js"></script>
 <script src="/js/script2.js"></script>
 <div id="fb-root"></div>
-<script type="text/javascript">
- 		// share to sn weibo
-		$(function(){
-			$('.share_sn_weibo').each(function(){
-				var meta = $(this).parent().children('div[type="share_meta"]');
-				var _w = 90
-					_h = 24;
-				var param = {
-					url:$(this).attr('resourceUrl'),
-					type:'2',
-					count:'1',
-					appkey:'diandian.com',
-					title: meta.children('div[type="title"]').attr('val'),
-					pic: meta.children('div[type="pic"]').attr('val'),
-					ralateUid:'',
-					language:'zh_cn',
-					rnd:new Date().valueOf()
-				}
-				var temp = [];
-				for( var p in param ){
-					temp.push(p + '=' + encodeURIComponent( param[p] || '' ) )
-				}
-				$(this).append('<iframe allowTransparency="true" frameborder="0" scrolling="no" src="http://hits.sinajs.cn/A1/weiboshare.html?' + temp.join('&') + '" width="'+ _w+'" height="'+_h+'"></iframe>')
-			});
-	    })	
-   	</script> 
-<script type="text/javascript">
-	  var _ddgaq = _ddgaq || [];
-	  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
-	  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
-
-	_ddgaq.push(['DDGAT._setAllowLinker', true]);
-	  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
-	  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
-	  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
-	  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
-	  _ddgaq.push(['DDGAT._trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-</script>
 <script type="text/javascript">
     //建立websocket连接
     socket = io.connect('http://127.0.0.1:3000');
@@ -253,12 +208,19 @@ niansong
     //发送消息给服务器
     $(".sendbutton").click(function(){
       var msg = $(".area").val();
+      $(".area").val("");
       socket.send(msg);
     });
 
     socket.on('message', function(msg){
        console.log('client get message'+msg);
-       var p = '<p>'+msg+'</p>';
+       var p = '<p class="p1">'+msg+'</p>';
+       $(".sendlist").prepend(p);
+    })
+    
+    socket.on('broadcast', function(msg){
+       console.log('client get message'+msg);
+       var p = '<p class="p2">'+msg+'</p>';
        $(".sendlist").prepend(p);
     })
 

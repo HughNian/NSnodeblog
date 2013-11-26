@@ -13,7 +13,7 @@ exports.index = function (req, res, next) {
     var cookies = {};
     req.headers.cookie && req.headers.cookie.split(';').forEach(function( cookie ) {
        var parts = cookie.split('=');
-       cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();                       
+       cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
     });
     var usercookie = cookies.nsblog;
     var is_login = 1;
@@ -36,11 +36,10 @@ exports.index = function (req, res, next) {
     } else {
         io.on('connection', function(socket){
            User.setUserOnlineStatus(true, userinfo.name);//设置用户为上线状态
-
            socket.on('message', function(msg){
                  console.log('this is client push message:'+msg);
                  socket.emit('message', msg);
-                 socket.broadcast.emit('message', msg);
+                 socket.broadcast.emit('broadcast', msg);
            });
 
            socket.on('disconnect', function(){
