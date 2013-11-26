@@ -1,5 +1,24 @@
 <%- include header.html %>
+<% if(is_login){ %>
 <div class="picside"></div>
+<div class="sendbox">
+  <div class="boxtop">
+    <span class="gb" hidefocus="true" style="cursor:pointer;">x</span>
+    <span class="zxh" hidefocus="true" style="cursor:pointer;">-</span>
+  </div>
+  <div class="sendlist"></div>
+  <div class="bar"></div>
+  <div class="sendarea">
+  <textarea class="area" node-type="_editorNode"></textarea>
+  </div>
+  <div class="buttonarea">
+   <a href="#nogo" class="sendbutton"></a>
+  </div>
+</div>
+<div class="chatbox">
+niansong
+</div>
+<% } %>
 <body class="index-page" youdao="bind">
 <header id="header" class="big-bg" style="height: 450px; background-position: 50% 0px;">
   <div class="header-inner" style="margin-top: 0px; opacity: 1;">
@@ -93,7 +112,6 @@
         </div>
       </div>
       <!-- close POST -->
-      
       <aside>
         <p class="meta"> <a href="http://wefriends001.diandian.com/post/2011-07-12/2835267">Jul 12, 2011</a><br>
           <a href="http://wefriends001.diandian.com/post/2011-07-12/2835267#notes">0&nbsp;°C</a><br>
@@ -227,6 +245,35 @@
 	    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
-	</script>
+</script>
+<script type="text/javascript">
+    //建立websocket连接
+    socket = io.connect('http://127.0.0.1:3000');
+    
+    //发送消息给服务器
+    $(".sendbutton").click(function(){
+      var msg = $(".area").val();
+      socket.send(msg);
+    });
+
+    socket.on('message', function(msg){
+       console.log('client get message'+msg);
+       var p = '<p>'+msg+'</p>';
+       $(".sendlist").prepend(p);
+    })
+
+    //聊天窗口控制
+    $(".chatbox").click(function(){
+       $(this).hide();
+       $(".sendbox").show();
+    });
+    $(".gb").click(function(){
+       $(".sendbox").hide();
+    });
+    $(".zxh").click(function(){
+       $(".sendbox").hide();
+       $(".chatbox").show();
+    });
+</script>
 </body>
 </html>

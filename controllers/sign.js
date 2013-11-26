@@ -98,7 +98,7 @@ exports.login = function(req, res, next){
 	if(!name || !pass){
 		return res.render('sign/login', {error: '信息不完整'});
 	}
-	
+
 	User.getUserByName(name, function(err, user){
 		if(err){
 		    return next(err);
@@ -110,6 +110,7 @@ exports.login = function(req, res, next){
 		if(pass !== user.pass){
 		    return res.render('sign/login', {error: '密码错误'});
 		}
+
 		gen_session(user, req, res);
 		res.redirect('/');
 	});
@@ -121,9 +122,21 @@ exports.login = function(req, res, next){
  *
  */
 exports.logout = function(req, res, next){
-	req.session.destroy();
-	res.clearCookie(config.auth_cookie_name, {path: '/'});
-	res.redirect(req.headers.referer || '/');
+    /*
+    var userinfo = req.session.user;
+    User.setUserOnlineStatus(false, userinfo.name, function(err, ret){ //设置用户下线状态
+        if(err){
+           return next(err);
+        }
+        if(ret){
+            req.session.destroy();
+            res.clearCookie(config.auth_cookie_name, {path: '/'});
+            res.redirect(req.headers.referer || '/');
+        }
+    }); */
+    req.session.destroy();
+    res.clearCookie(config.auth_cookie_name, {path: '/'});
+    res.redirect(req.headers.referer || '/');
 };
 
 function md5(str)

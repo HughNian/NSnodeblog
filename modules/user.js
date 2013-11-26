@@ -18,7 +18,7 @@ exports.getUserByNames = function(names, callback){
  *
  */
 exports.getUserByName = function(name, callback){
-	User.findOne({'name': name}, callback);
+	User.findOne({name: name}, callback);
 };
 
 /**
@@ -49,13 +49,27 @@ exports.getUsersByQuery = function (query, callback) {
 };
 
 /**
- *
+ * @todo find no del users by status and not this name user(2013-11-26)
  *
  *
  */
-exports.getUsersNoDel = function(status, name, callback)
+exports.getUsersNoDel = function(is_online, del_status, name, callback)
 {
-   User.find({del_status: {$ne: status}, name: {$in: name}}, callback);
+   User.find({is_online: is_online, del_status: del_status, name: {$ne: name}}, callback);
+};
+
+/**
+ *  set user online status by name (2013-11-26)
+ *
+ */
+exports.setUserOnlineStatus = function(status, name, callback){
+   User.findOne({name: name}, function(err, user){
+       if(err){
+          return callback(err);
+       }
+       user.is_online = status;
+       user.save(callback);
+   });
 };
 
 /**

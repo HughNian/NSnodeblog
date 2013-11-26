@@ -39,7 +39,7 @@ var server = http.createServer(app).listen(config.port, function(){
 
 io = require('socket.io').listen(server);//初始化socket.io
 // routes
-routes(app, io);
+routes(app);
 
 module.exports = app;
 module.exports = io;

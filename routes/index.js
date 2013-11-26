@@ -7,12 +7,7 @@
 var site = require('../controllers/site');
 var sign = require('../controllers/sign');
 
-module.exports = function(app, io) {
-    //链接socket.io
-    io.on('connection', function (socket) {
-        socket.emit('open');
-    });
-
+module.exports = function(app) {
     //首页
     app.get('/', site.index);
     //用户注册，登录，退出

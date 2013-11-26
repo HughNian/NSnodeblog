@@ -127,3 +127,15 @@
 	background-size: cover;
 	border-left: #666 1px solid;
 }
+
+.sendbox {position:fixed; right:80px; bottom:0px; width:320px; height:440px; z-index:9999; border:1px solid #afafaf; display:none;}
+.sendbox .boxtop {width:100%; height:35px; background:#CCC}
+.sendbox .boxtop span {float:right; margin-right: 15px; line-height:35px;}
+.sendbox .sendlist {width:100%; height:270px; background:#FFF}
+.sendbox .sendlist p {max-width: 250px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;}
+.sendbox .bar {width:100%; height:22px; background:#CCC}
+.sendbox .sendarea {width:100%; height:90px; background:#FFF}
+.sendbox .sendarea .area {overflow-y:auto;width:100%; height:90px; resize:none}
+.sendbox .buttonarea {width:100%; height:20px; background:#CCC}
+.sendbox .buttonarea .sendbutton {background:url(/images/button.png);float:right;width:50px;height:25px;outline:none;}
+.chatbox {position:fixed; right:80px; bottom:0px; width:120px; height:25px; border:1px solid #afafaf; background:#CCC;display:block;text-align:center; z-index:9999;}
