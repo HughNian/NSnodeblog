@@ -34,7 +34,7 @@ exports.index = function (req, res, next) {
             haoyou: haoyou
         });
     } else {
-        io.on('connection', function(socket){
+        io.once('connection', function(socket){
            User.setUserOnlineStatus(true, userinfo.name);//设置用户为上线状态
            socket.on('message', function(msg){
                  console.log('this is client push message:'+msg);
