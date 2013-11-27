@@ -214,14 +214,14 @@ niansong
 
     socket.on('message', function(msg){
        console.log('client get message'+msg);
-       var p = '<p class="p1">'+msg+'</p>';
-       $(".sendlist").prepend(p);
+       var p = '<div class="chatdiv"><p class="p1">'+msg+'</p></div>';
+       $(".sendlist").append(p);
     })
     
     socket.on('broadcast', function(msg){
        console.log('client get message'+msg);
-       var p = '<p class="p2">'+msg+'</p>';
-       $(".sendlist").prepend(p);
+       var p = '<div class="chatdiv"><p class="p2">'+msg+'</p><div>';
+       $(".sendlist").append(p);
     })
 
     //聊天窗口控制
