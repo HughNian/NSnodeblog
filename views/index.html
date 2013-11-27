@@ -227,14 +227,14 @@ niansong
     //聊天窗口控制
     $(".chatbox").click(function(){
        $(this).hide();
-       $(".sendbox").show();
+       $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
     });
     $(".gb").click(function(){
-       $(".sendbox").hide();
+       $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
     });
     $(".zxh").click(function(){
-       $(".sendbox").hide();
-       $(".chatbox").show();
+       $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
+       $(".chatbox").css({'height':'0'}).show().animate({'height':'25px'});
     });
 </script>
 </body>

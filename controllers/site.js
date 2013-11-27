@@ -43,8 +43,8 @@ exports.index = function (req, res, next) {
            });
 
            socket.on('disconnect', function(){
-                 User.setUserOnlineStatus(false, userinfo.name);
-           });
+                 User.setUserOnlineStatus(false, userinfo.name); //socket断开连接，设置用户离线状态
+          });
         });
         User.getUsersNoDel(true, false, userinfo.name, function(err, friends){
             if(err){
@@ -59,4 +59,17 @@ exports.index = function (req, res, next) {
             });
         });
     }
+}
+
+/**
+ * 首页ajax获取好友信息(2013-11-27)
+ *
+ *
+ */
+exports.friends = function(req, res, next)
+{
+    var usersession = req.session.user;
+    var userinfo = usersession;
+
+
 }
