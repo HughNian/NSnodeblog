@@ -131,10 +131,10 @@
 .sendbox {position:fixed; right:80px; bottom:0px; width:320px; height:440px; z-index:9999; border:1px solid #afafaf; display:none;}
 .sendbox .boxtop {width:100%; height:35px; background:#CCC}
 .sendbox .boxtop span {float:right; margin-right: 15px; line-height:35px;}
-.sendbox .sendlist {width:100%; height:270px; background:#FFF}
-.sendbox .sendlist .chatdiv {width:100%;min-height:25px;}
-.sendbox .sendlist .p1 {float:right;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;margin-top:15px; margin-bottom:8px;}
-.sendbox .sendlist .p2 {float:left;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#CCC;margin-top:15px; margin-bottom:8px;}
+.sendbox .sendlist {width:100%; height:270px; background:#FFF;overflow-y:auto;}
+.sendbox .sendlist .chatdiv {width:100%;min-height:25px;float:left;}
+.sendbox .sendlist .chatdiv .p1 {float:right;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;margin-top:15px; margin-bottom:8px;}
+.sendbox .sendlist .chatdiv .p2 {float:left;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#CCC;margin-top:15px; margin-bottom:8px;}
 .sendbox .bar {width:100%; height:22px; background:#CCC}
 .sendbox .sendarea {width:100%; height:90px; background:#FFF}
 .sendbox .sendarea .area {overflow-y:auto;width:100%; height:90px; resize:none}
