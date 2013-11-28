@@ -36,10 +36,13 @@ exports.index = function (req, res, next) {
     } else {
         io.once('connection', function(socket){
            User.setUserOnlineStatus(true, userinfo.name);//设置用户为上线状态
-           socket.on('message', function(msg){
-                 console.log('this is client push message:'+msg);
-                 socket.emit('message', msg);
-                 socket.broadcast.emit('broadcast', msg);
+           clients[userinfo.name] = socket;//把当前用户的socket对象存在全局数组变量clients中，以实现点对点单聊
+           socket.on('message', function(data){
+                 //dataformat:{to:'all',from:'Nick',msg:'msg'}
+                 console.log('this is client push message:'+data.msg);
+                 clients[data.to].emit('message', data.msg);
+                 clients[data.from].emit('message', data.msg);
+                 //socket.broadcast.emit('broadcast', msg); //广播消息
            });
 
            socket.on('disconnect', function(){

@@ -204,12 +204,11 @@ niansong
 <script type="text/javascript">
     //建立websocket连接
     socket = io.connect('http://127.0.0.1:3000');
-    
     //发送消息给服务器
     $(".sendbutton").click(function(){
       var msg = $(".area").val();
       $(".area").val("");
-      socket.send(msg);
+      socket.emit('message', {to:'niansong',from:'<%= userinfo.name %>',msg:msg});
     });
 
     socket.on('message', function(msg){

@@ -43,5 +43,9 @@ io.set('log level', 0);
 // routes
 routes(app);
 
+clients = [];//全局数组变量，存储socket.io对象
+
+//输出各对象变量以全局使用
 module.exports = app;
 module.exports = io;
+module.exports = clients;
