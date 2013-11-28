@@ -40,8 +40,8 @@ exports.index = function (req, res, next) {
            socket.on('message', function(data){
                  //dataformat:{to:'all',from:'Nick',msg:'msg'}
                  console.log('this is client push message:'+data.msg);
-                 clients[data.to].emit('message', data.msg);
-                 clients[data.from].emit('message', data.msg);
+                 clients[data.to].emit('message', {to:data.to, from:data.from, msg:data.msg});
+                 clients[data.from].emit('message', {to:data.to, from:data.from, msg:data.msg});
                  //socket.broadcast.emit('broadcast', msg); //广播消息
            });
 
@@ -71,8 +71,13 @@ exports.index = function (req, res, next) {
  */
 exports.friends = function(req, res, next)
 {
-    var usersession = req.session.user;
-    var userinfo = usersession;
-
-
+    var oUrl = url.parse(req.url, true);
+    var name = oUrl.query.name;
+    console.log(name);
+    User.getUsersNoDel(true, false, name, function(err, users){
+         if(err){
+             return next(err);
+         }
+        res.send(users);
+    });
 }

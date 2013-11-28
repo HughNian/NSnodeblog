@@ -3,6 +3,7 @@
 <div class="picside"></div>
 <div class="sendbox">
   <div class="boxtop">
+    <span class="chatname"></span>
     <span class="gb" hidefocus="true" style="cursor:pointer;">x</span>
     <span class="zxh" hidefocus="true" style="cursor:pointer;">-</span>
   </div>
@@ -16,7 +17,6 @@
   </div>
 </div>
 <div class="chatbox">
-niansong
 </div>
 <% } %>
 <body class="index-page" youdao="bind">
@@ -208,12 +208,17 @@ niansong
     $(".sendbutton").click(function(){
       var msg = $(".area").val();
       $(".area").val("");
-      socket.emit('message', {to:'niansong',from:'<%= userinfo.name %>',msg:msg});
+      var to = $(".chatname").html();
+      socket.emit('message', {to:to,from:'<%= userinfo.name %>',msg:msg});
     });
 
-    socket.on('message', function(msg){
-       console.log('client get message'+msg);
-       var p = '<div class="chatdiv" id="chatdiv"><p class="p1">'+msg+'</p></div>';
+    socket.on('message', function(data){
+       console.log('client get message'+data.msg);
+       if(data.from == "<%= userinfo.name%>"){
+           var p = '<div class="chatdiv" id="chatdiv"><p class="p1">'+data.msg+'</p></div>';
+       } else {
+           var p = '<div class="chatdiv" id="chatdiv"><p class="p2">'+data.msg+'</p><div>';
+       }
        $(".sendlist").append(p);
        $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);//到scroll底部
     })
@@ -226,17 +231,36 @@ niansong
     })
 
     //聊天窗口控制
+    $(".avatar").live('click', function(){
+      $(".chatname").html($(this).attr('title'));
+      $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+    });
+
     $(".chatbox").click(function(){
        $(this).hide();
        $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
     });
+
     $(".gb").click(function(){
        $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
     });
+
     $(".zxh").click(function(){
        $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
+       $(".chatbox").html($(".chatname").html());
        $(".chatbox").css({'height':'0'}).show().animate({'height':'25px'});
     });
 </script>
+<% if(is_login){%>
+<script type="text/javascript">
+    $(function(){
+        $.get("/friends?name=<%= userinfo.name %>", function(data){
+              for(var key in data){
+                 $(".picside").html("<img src='"+data[key].avatar+"' title='"+data[key].name+"' alt='"+data[key].name+"' class='avatar'>");
+              }
+        });
+    });
+</script>
+<% }%>
 </body>
 </html>
