@@ -206,7 +206,21 @@
     socket = io.connect('http://127.0.0.1:3000');
     //发送消息给服务器
     $(".sendbutton").click(function(){
-      var msg = $(".area").val();
+      sendmsg();
+    });
+    
+    $(".area").keydown(function(){
+       if(event.keyCode==13){//按回车不换行提交内容 如果加上 && event.ctrlKey 则crtl+enter提交
+         sendmsg();
+         event.returnValue = false;
+         return false;
+       }
+    });
+    
+    //发送消息
+    function sendmsg()
+    {
+      var msg = $.trim($(".area").val());
       if(msg == ""){
           colorKit();
           return false;
@@ -214,7 +228,7 @@
       $(".area").val("");
       var to = $(".chatname").html();
       socket.emit('message', {to:to,from:'<%= userinfo.name %>',msg:msg});
-    });
+    }
 
     socket.on('message', function(data){
        console.log('client get message'+data.msg);
