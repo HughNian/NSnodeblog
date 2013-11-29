@@ -73,7 +73,6 @@ exports.friends = function(req, res, next)
 {
     var oUrl = url.parse(req.url, true);
     var name = oUrl.query.name;
-    console.log(name);
     User.getUsersNoDel(true, false, name, function(err, users){
          if(err){
              return next(err);

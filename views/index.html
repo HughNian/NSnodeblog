@@ -207,6 +207,10 @@
     //发送消息给服务器
     $(".sendbutton").click(function(){
       var msg = $(".area").val();
+      if(msg == ""){
+          colorKit();
+          return false;
+      }
       $(".area").val("");
       var to = $(".chatname").html();
       socket.emit('message', {to:to,from:'<%= userinfo.name %>',msg:msg});
@@ -250,6 +254,29 @@
        $(".chatbox").html($(".chatname").html());
        $(".chatbox").css({'height':'0'}).show().animate({'height':'25px'});
     });
+
+    //输入框警告提示
+    function colorOn()
+    {
+        $(".area").css("background","rgb(255, 211, 211)");
+        Times++;
+        window.setTimeout("colorOff()", 100);
+    }
+
+    function colorOff()
+    {
+        $(".area").css("background","#FFF");
+        if(Times < 3)
+          window.setTimeout("colorOn()", 100);
+        else
+          $(".area").history.go(0);
+    }
+
+    function colorKit()
+    {
+        Times = 0;
+        window.setTimeout("colorOn()", 100);
+    }
 </script>
 <% if(is_login){%>
 <script type="text/javascript">

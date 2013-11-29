@@ -125,7 +125,7 @@
 	height: 100%;
 	z-index: 9999;
 	background-size: cover;
-	border-left: #666 1px solid;
+	border-left: #ccc 1px solid;
 }
 
 .sendbox {position:fixed; right:80px; bottom:0px; width:320px; height:440px; z-index:9999; border:1px solid #afafaf; display:none;}
@@ -143,4 +143,4 @@
 .sendbox .buttonarea {width:100%; height:20px; background:#CCC}
 .sendbox .buttonarea .sendbutton {background:url(/images/button.png);float:right;width:50px;height:25px;outline:none;}
 .chatbox {position:fixed; right:80px; bottom:0px; width:120px; height:25px; border:1px solid #afafaf; background:#CCC;display:none;text-align:center; z-index:9999;}
-.avatar {border-radius:50%;cursor:pointer;}
+.avatar {width:40px;height:40px;border-radius:50%;cursor:pointer;float:left;margin-left:6px;margin-top:10px;}
