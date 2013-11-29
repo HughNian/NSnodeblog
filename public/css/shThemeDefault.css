@@ -126,6 +126,7 @@
 	z-index: 9999;
 	background-size: cover;
 	border-left: #ccc 1px solid;
+  overflow-y:auto;
 }
 
 .sendbox {position:fixed; right:80px; bottom:0px; width:320px; height:440px; z-index:9999; border:1px solid #afafaf; display:none;}

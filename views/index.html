@@ -220,7 +220,7 @@
        console.log('client get message'+data.msg);
        if(data.from == "<%= userinfo.name%>"){
            var p = '<div class="chatdiv" id="chatdiv"><p class="p1">'+data.msg+'</p></div>';
-       } else {
+       } else if(data.from == $(".chatname").html()){
            var p = '<div class="chatdiv" id="chatdiv"><p class="p2">'+data.msg+'</p><div>';
        }
        $(".sendlist").append(p);
@@ -282,9 +282,11 @@
 <script type="text/javascript">
     $(function(){
         $.get("/friends?name=<%= userinfo.name %>", function(data){
+              var img = [];
               for(var key in data){
-                 $(".picside").html("<img src='"+data[key].avatar+"' title='"+data[key].name+"' alt='"+data[key].name+"' class='avatar'>");
+                 img.push("<img src='"+data[key].avatar+"' title='"+data[key].name+"' alt='"+data[key].name+"' class='avatar'>");
               }
+              $(".picside").html(img.join(""));
         });
     });
 </script>
