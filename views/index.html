@@ -268,6 +268,7 @@
        if(data.from == "<%= userinfo.name%>"){
            var p = '<div class="chatdiv" id="chatdiv"><p class="p1">'+data.msg+'</p></div>';
        } else if(data.from == $(".chatname").html()){
+           if($(".sendbox").css('display') == "block") msg_count_old += 1;
            var p = '<div class="chatdiv" id="chatdiv"><p class="p2">'+data.msg+'</p><div>';
        }
        $(".sendlist").append(p);
