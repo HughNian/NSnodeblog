@@ -38,7 +38,7 @@ exports.index = function (req, res, next) {
            User.setUserOnlineStatus(true, userinfo.name);//设置用户为上线状态
            clients[userinfo.name] = socket;//把当前用户的socket对象存在全局数组变量clients中，以实现点对点单聊
            socket.on('message', function(data){
-                 //dataformat:{to:'all',from:'Nick',msg:'msg'}
+                 //dataformat:{to:'User1',from:'User2',msg:'msg'}
                  console.log('this is client push message:'+data.msg);
                  clients[data.to].emit('message', {to:data.to, from:data.from, msg:data.msg});
                  clients[data.from].emit('message', {to:data.to, from:data.from, msg:data.msg});

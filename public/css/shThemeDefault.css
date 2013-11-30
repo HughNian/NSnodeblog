@@ -129,19 +129,22 @@
   overflow-y:auto;
 }
 
-.sendbox {position:fixed; right:80px; bottom:0px; width:320px; height:440px; z-index:9999; border:1px solid #afafaf; display:none;}
+.sendbox {position:fixed; right:80px; bottom:0px; width:320px; height:440px; z-index:9999; border:1px solid #afafaf; display:none}
 .sendbox .boxtop {width:100%; height:35px; background:#CCC}
-.sendbox .boxtop .chatname {margin-left:120px;width:200px;line-height:35px;}
-.sendbox .boxtop .gb {float:right; margin-right: 15px; line-height:35px;}
-.sendbox .boxtop .zxh {float:right; margin-right: 15px; line-height:35px;}
+.sendbox .boxtop .chatname {margin-left:120px;width:200px;line-height:35px}
+.sendbox .boxtop .gb {float:right; margin-right: 15px; line-height:35px}
+.sendbox .boxtop .zxh {float:right; margin-right: 15px; line-height:35px}
 .sendbox .sendlist {width:100%; height:270px; background:#FFF;overflow-y:auto;}
 .sendbox .sendlist .chatdiv {width:100%;min-height:25px;float:left;}
-.sendbox .sendlist .chatdiv .p1 {float:right;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;margin-top:15px; margin-bottom:8px;}
-.sendbox .sendlist .chatdiv .p2 {float:left;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#CCC;margin-top:15px; margin-bottom:8px;}
+.sendbox .sendlist .chatdiv .p1 {float:right;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#EBFBE3;margin-top:15px; margin-bottom:8px}
+.sendbox .sendlist .chatdiv .p2 {float:left;max-width: 180px; min-width:72px; border-radius:5px; margin:0 8px; background:#CCC;margin-top:15px; margin-bottom:8px}
 .sendbox .bar {width:100%; height:22px; background:#CCC}
 .sendbox .sendarea {width:100%; height:90px; background:#FFF}
 .sendbox .sendarea .area {overflow-y:auto;width:100%; height:90px; resize:none}
 .sendbox .buttonarea {width:100%; height:20px; background:#CCC}
-.sendbox .buttonarea .sendbutton {background:url(/images/button.png);float:right;width:50px;height:25px;outline:none;}
-.chatbox {position:fixed; right:80px; bottom:0px; width:120px; height:25px; border:1px solid #afafaf; background:#CCC;display:none;text-align:center; z-index:9999;}
-.avatar {width:40px;height:40px;border-radius:50%;cursor:pointer;float:left;margin-left:6px;margin-top:10px;}
+.sendbox .buttonarea .sendbutton {background:url(/images/button.png);float:right;width:50px;height:25px;outline:none}
+.chatbox {position:fixed; right:80px; bottom:0px; width:120px; height:25px; border:1px solid #afafaf; background:#CCC;display:none;text-align:center; z-index:9999}
+.avatar {width:40px;height:40px;border-radius:50%;cursor:pointer;float:left;margin-left:6px;margin-top:10px}
+.userlist {position:fixed; right:400px; bottom:0px; width:133px; height:440px; z-index:9999; border:1px solid #afafaf; display:none; background:#CCC; overflow-y:auto}
+.userlist .username {width:98px;height:40px;float:left;margin-top:10px;border:1px solid #afafaf;margin-left:5px;padding-left:5px;line-height:40px;background:#FFF;cursor:pointer}
+.userlist .deluser {width:20px;height:40px;float:right;text-align:center;line-height:40px;display:none;z-index:9999}
