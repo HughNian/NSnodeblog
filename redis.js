@@ -5,7 +5,7 @@ client.on('error', function(error){
     console.log(error);
 });
 
-/*
+
 client.select('15', function(error){
     if(error){
     	console.log(error);
@@ -22,7 +22,7 @@ client.select('15', function(error){
             client.end();
     	});
     }
-});*/
+});
 
 client.select('15', function(error){
     if(error){

@@ -168,6 +168,9 @@ $(".deluser").live('click', function(event){
 $(".gb").click(function(){
    $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
    $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
+   $.post('/setchats', {"user_msg":user_msg}, function(data){
+     console.log(data);
+   })
 });
 
 $(".zxh").click(function(){
