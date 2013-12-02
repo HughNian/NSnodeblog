@@ -2,10 +2,6 @@
  * chats modules
  *
  */
- //redis
-var redis = require("redis");
-var rclient = redis.createClient('6379', '127.0.0.1');
-
 //setchats
 exports.setChats = function(data, callback){
     rclient.on('error', function(error){

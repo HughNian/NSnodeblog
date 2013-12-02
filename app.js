@@ -40,12 +40,17 @@ var server = http.createServer(app).listen(config.port, function(){
 io = require('socket.io').listen(server);//初始化socket.io
 io.set('log level', 0);
 
+//redis
+var redis = require("redis");
+rclient = redis.createClient('6379', '127.0.0.1');//全局redis client对象
+
 // routes
 routes(app);
 
 clients = [];//全局数组变量，存储socket.io对象
 
-//输出各对象变量以全局使用
+//输出各对象变量以便全局使用
 module.exports = app;
 module.exports = io;
 module.exports = clients;
+module.exports = rclient;

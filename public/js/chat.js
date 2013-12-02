@@ -70,6 +70,9 @@ $(".avatar").live('click', function(){
 
 //打开消息盒
 $(".chatbox").click(function(){
+   var now_user = $("#avatar").attr("alt");
+   var old_chats = getchats(now_user);
+   //console.log(old_chats);
    //初始化一些数据
    if(typeof msg_count == "undefined")
       msg_count_old = 0;
@@ -168,9 +171,8 @@ $(".deluser").live('click', function(event){
 $(".gb").click(function(){
    $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
    $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
-   $.post('/setchats', {"user_msg":user_msg}, function(data){
-     console.log(data);
-   })
+   var now_user = $("#avatar").attr("alt");
+   savechats(now_user, user_msg);
 });
 
 $(".zxh").click(function(){
@@ -252,7 +254,20 @@ function colorKit()
 function stopBubble(e){  
   if(document.attachEvent) {//ie  
       e.cancelBubble = true;  
-  }else{  
+  } else {
       e.stopPropagation();  
-  }  
+  }
+}
+
+//保存聊天信息
+function savechats(from_user, user_msg){
+  console.log(user_msg);
+  $.post('/setchats', {"from_user":from_user,"user_msg":user_msg}, function(ret){});
+}
+
+//读取聊天信息
+function getchats(from_user){
+  $.get('/getchats?from_user='+from_user, function(ret){
+    console.log(ret);
+  });
 }
