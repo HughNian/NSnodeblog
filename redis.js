@@ -24,6 +24,7 @@ client.select('15', function(error){
     }
 });*/
 
+/*
 client.select('15', function(error){
     if(error){
        console.log(error);
@@ -36,5 +37,36 @@ client.select('15', function(error){
     		}
     		client.end();
     	});
+    }
+});*/
+
+/*
+client.select('15', function(error){
+    if(error){
+       console.log(error);
+    } else {
+        client.hdel("user_msg", 'niansong', function(err, res){
+            if(error){
+               console.log(error);
+            } else {
+                console.log(res);
+            }
+            client.end();
+        });
+    }
+});*/
+
+client.select('15', function(error){
+    if(error){
+       console.log(error);
+    } else {
+        client.get('niansong', function(err, res){
+            if(error){
+               console.log(error);
+            } else {
+                console.log(JSON.parse(res));
+            }
+            client.end();
+        });
     }
 });

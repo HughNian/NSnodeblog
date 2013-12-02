@@ -25,6 +25,7 @@ socket.on('message', function(data){
       user_msg[data.from].push({"from_msg":data.msg});
       var now_user = $("#avatar").attr("alt");
       delete user_msg[now_user];
+   savechats(now_user, data.from, user_msg);//保存聊天记录
    user_count = 0;
    msg_count = 0;
    var from_msg = [];
@@ -70,27 +71,32 @@ $(".avatar").live('click', function(){
 
 //打开消息盒
 $(".chatbox").click(function(){
-   var now_user = $("#avatar").attr("alt");
-   var old_chats = getchats(now_user);
-   //console.log(old_chats);
-   //初始化一些数据
-   if(typeof msg_count == "undefined")
+  var _this = $(this);
+  var from_user = $("#avatar").attr("alt");
+  $.get('/getchats?from_user='+from_user, function(ret){//读取聊天信息
+    var old_chats = {};
+    if(ret.result == 1){
+      console.log(ret.data);
+      old_chats = ret.data;
+    }
+    //初始化一些数据
+    if(typeof msg_count == "undefined")
       msg_count_old = 0;
-   else
+    else
       msg_count_old = msg_count;
    
-   if(typeof user_count == "undefined") user_count = 0;
+    if(typeof user_count == "undefined") user_count = 0;
 
-   $(this).hide();
-   var p = [];
-   if(user_count > 1){
-     var userlist = [];
-     var username = [];
-     for(var key in user_msg){
+    _this.hide();
+    var p = [];
+    if(user_count > 1){
+      var userlist = [];
+      var username = [];
+      for(var key in user_msg){
          userlist.push("<span class='username' data-name="+key+">"+key+"<label class='deluser'>X</label></span>");
          username.push(key);
-     }
-     if($(".chatbox").html().match("您有")){
+      }
+      if($(".chatbox").html().match("您有")){
         var last_username = username[username.length-1];
         userlist[userlist.length-1] = "<span class='username' style='background:#E6DB74' data-name="+last_username+" id="+key+">"+last_username+"<label class='deluser'>X</label></span>";
         $(".userlist").html(userlist.join(""));
@@ -101,12 +107,12 @@ $(".chatbox").click(function(){
           p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[last_username][k].from_msg+'</p><div>');
         }
         $(".chatname").html(last_username);
-     } else {
+      } else {
         var now_chat = $(".chatname").html();
         $(".userlist").html(userlist.join(""));
         $(".username").each(function(){
-           if($(this).attr("data-name") == now_chat)
-             $(this).attr("style","background:#E6DB74");
+           if(_this.attr("data-name") == now_chat)
+             _this.attr("style","background:#E6DB74");
         });
         for(var k in user_msg[now_chat]){
         if(typeof user_msg[now_chat][k].to_msg != "undefined")
@@ -115,14 +121,14 @@ $(".chatbox").click(function(){
           p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[now_chat][k].from_msg+'</p><div>');
         }
         $(".chatname").html(now_chat);
-     }
+      }
      
-     $(".sendlist").html(p.join(""));
-     $(".sendbox").css("display","block");
-     $(".userlist").css({'height':'0'}).show().animate({'height':'440px'});
-     $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
-   } else if (user_count == 1 || $(".chatbox").html().match("您有")){
-     for(var key in user_msg){
+      $(".sendlist").html(p.join(""));
+      $(".sendbox").css("display","block");
+      $(".userlist").css({'height':'0'}).show().animate({'height':'440px'});
+      $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+    } else if (user_count == 1 || $(".chatbox").html().match("您有")){
+      for(var key in user_msg){
         for(var k in user_msg[key]){
           if(typeof user_msg[key][k].to_msg != "undefined")
             p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[key][k].to_msg+'</p><div>');
@@ -130,12 +136,13 @@ $(".chatbox").click(function(){
             p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[key][k].from_msg+'</p><div>');
         }
         $(".chatname").html(key);
-     }
-     $(".sendlist").html(p.join(""));
-     $(".sendbox").css("display","block");//使后面可以计算出 #sendlist的scrollTop    
-   }
-   $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);
-   $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+      }
+      $(".sendlist").html(p.join(""));
+      $(".sendbox").css("display","block");//使后面可以计算出 #sendlist的scrollTop    
+    }
+    $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);
+    $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+  });
 });
 
 //读取多人的消息
@@ -159,7 +166,9 @@ $(".deluser").live('click', function(event){
   evt = event || window.event;
   stopBubble(evt);//阻止事件冒泡
   $(this).parent().remove();
+  var from_user = $("#avatar").attr("alt");
   var del_user = $(this).parent().attr("data-name");
+  savechats(from_user, to_user, user_msg);
   delete user_msg[del_user];
   user_count -= 1;
   var num = $(".username").length;
@@ -171,8 +180,9 @@ $(".deluser").live('click', function(event){
 $(".gb").click(function(){
    $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
    $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
-   var now_user = $("#avatar").attr("alt");
-   savechats(now_user, user_msg);
+   var from_user = $("#avatar").attr("alt");
+   var to_user = $(".chatname").html();
+   savechats(from_user, to_user, user_msg);//关闭聊天窗口时保存聊天信息
 });
 
 $(".zxh").click(function(){
@@ -260,14 +270,16 @@ function stopBubble(e){
 }
 
 //保存聊天信息
-function savechats(from_user, user_msg){
-  console.log(user_msg);
-  $.post('/setchats', {"from_user":from_user,"user_msg":user_msg}, function(ret){});
+function savechats(from_user, to_user, user_msg){
+  $.post('/setchats', {"from_user":from_user,"to_user":to_user,"user_msg":user_msg}, function(ret){});
 }
 
-//读取聊天信息
-function getchats(from_user){
-  $.get('/getchats?from_user='+from_user, function(ret){
-    console.log(ret);
-  });
-}
+//刷新页面时存储聊天信息
+$(window).keydown(function(e){
+  var from_user = $("#avatar").attr("alt");
+  var to_user = $(".chatname").html() || $(".chatbox").html();
+  if(e.keyCode == 116 && to_user != "" && user_msg != "")
+  {
+    savechats(from_user, to_user, user_msg);
+  }
+});

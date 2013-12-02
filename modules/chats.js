@@ -3,7 +3,7 @@
  *
  */
 //setchats
-exports.setChats = function(data, callback){
+exports.setChats = function(from_user, data, callback){
     rclient.on('error', function(error){
 		console.log(error);
 		return callback(error);
@@ -13,7 +13,7 @@ exports.setChats = function(data, callback){
           console.log(error);
           return callback(error);
 		}
-        rclient.hmset('user_msg', data, callback);
+        rclient.set(from_user, data, callback);
 	});
 };
 
@@ -28,6 +28,6 @@ exports.getChats = function(from_user, callback){
           console.log(error);
           return callback(error);
 		}
-        rclient.hmget('user_msg', from_user, callback);
+        rclient.get(from_user, callback);
 	});
 };
