@@ -4,6 +4,7 @@
 socket = io.connect('http://127.0.0.1:3000');
 
 user_msg = {};//全局用户聊天信息对象
+refresh_tag = true;
 
 $(".sendbutton").click(function(){
   sendmsg();
@@ -67,6 +68,7 @@ socket.on('broadcast', function(msg){
 $(".avatar").live('click', function(){
   $(".chatname").html($(this).attr('title'));
   $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+  refresh_tag = false;
 });
 
 //打开消息盒
@@ -98,6 +100,12 @@ $(".chatbox").click(function(){
       }
       if($(".chatbox").html().match("您有")){
         var last_username = username[username.length-1];
+        if(refresh_tag == true){
+          if(old_chats[last_username] != ""){
+             //var old_five_chats = old_chats[last_username].slice(-5);
+             user_msg[last_username] = old_chats[last_username].slice(-5);
+          }
+        }
         userlist[userlist.length-1] = "<span class='username' style='background:#E6DB74' data-name="+last_username+" id="+key+">"+last_username+"<label class='deluser'>X</label></span>";
         $(".userlist").html(userlist.join(""));
         for(var k in user_msg[last_username]){
@@ -109,6 +117,12 @@ $(".chatbox").click(function(){
         $(".chatname").html(last_username);
       } else {
         var now_chat = $(".chatname").html();
+        if(refresh_tag == true){
+          if(old_chats[now_chat] != ""){
+             //var old_five_chats = old_chats[now_chat].slice(-5);
+             user_msg[now_chat] = old_chats[now_chat].slice(-5);
+          }
+        }
         $(".userlist").html(userlist.join(""));
         $(".username").each(function(){
            if(_this.attr("data-name") == now_chat)
@@ -129,11 +143,23 @@ $(".chatbox").click(function(){
       $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
     } else if (user_count == 1 || $(".chatbox").html().match("您有")){
       for(var key in user_msg){
-        for(var k in user_msg[key]){
-          if(typeof user_msg[key][k].to_msg != "undefined")
-            p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[key][k].to_msg+'</p><div>');
-          if(typeof user_msg[key][k].from_msg != "undefined")
-            p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[key][k].from_msg+'</p><div>');
+        if(refresh_tag == true){
+          if(old_chats[key] != ""){
+             var message = old_chats[key].slice(-5);
+          }
+          for(var k in message) {
+            if(typeof message[k].to_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
+            if(typeof message[k].from_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+message[k].from_msg+'</p><div>');
+          }
+        } else {
+          for(var k in user_msg[key]) {
+            if(typeof user_msg[key][k].to_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[key][k].to_msg+'</p><div>');
+            if(typeof user_msg[key][k].from_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[key][k].from_msg+'</p><div>');
+          }
         }
         $(".chatname").html(key);
       }
@@ -142,6 +168,7 @@ $(".chatbox").click(function(){
     }
     $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);
     $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+    refresh_tag = false;
   });
 });
 
@@ -168,7 +195,6 @@ $(".deluser").live('click', function(event){
   $(this).parent().remove();
   var from_user = $("#avatar").attr("alt");
   var del_user = $(this).parent().attr("data-name");
-  savechats(from_user, to_user, user_msg);
   delete user_msg[del_user];
   user_count -= 1;
   var num = $(".username").length;
@@ -182,7 +208,6 @@ $(".gb").click(function(){
    $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
    var from_user = $("#avatar").attr("alt");
    var to_user = $(".chatname").html();
-   savechats(from_user, to_user, user_msg);//关闭聊天窗口时保存聊天信息
 });
 
 $(".zxh").click(function(){
@@ -276,10 +301,5 @@ function savechats(from_user, to_user, user_msg){
 
 //刷新页面时存储聊天信息
 $(window).keydown(function(e){
-  var from_user = $("#avatar").attr("alt");
-  var to_user = $(".chatname").html() || $(".chatbox").html();
-  if(e.keyCode == 116 && to_user != "" && user_msg != "")
-  {
-    savechats(from_user, to_user, user_msg);
-  }
+  refresh_tag = true;
 });

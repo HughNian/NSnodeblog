@@ -31,3 +31,5 @@ exports.getChats = function(from_user, callback){
         rclient.get(from_user, callback);
 	});
 };
+
+//delchats

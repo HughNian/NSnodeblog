@@ -18,11 +18,8 @@ exports.setchats = function(req, res, next)
         }
         data = JSON.parse(data);
         var save_data = {};
-        if(data != null){
-          console.log(data[to_user]);
-          for(var key in user_msg[to_user]){
-              data[to_user].push(user_msg[to_user][key]);
-          }
+        if(array_key_exists(to_user, data)){
+          data[to_user].push(user_msg[to_user][user_msg[to_user].length-1]);
           save_data = data;
         } else {
           save_data = user_msg
@@ -49,4 +46,14 @@ exports.getchats = function(req, res, next)
       var ret = {"result":1,"data":data}
       res.send(ret);
    });
+}
+
+//private
+function array_key_exists(key, arr) {
+  for(var k in arr) {
+    if( k == key) {
+      return true;
+    }
+  }
+  return false;
 }

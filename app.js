@@ -43,7 +43,7 @@ io.set('log level', 0);
 //redis
 var redis = require("redis");
 rclient = redis.createClient('6379', '127.0.0.1');//全局redis client对象
-
+rclient.setMaxListeners(0);
 // routes
 routes(app);
 
