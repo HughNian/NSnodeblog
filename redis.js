@@ -60,7 +60,7 @@ client.select('15', function(error){
     if(error){
        console.log(error);
     } else {
-        client.del('songsong', function(err, res){
+        client.del('niansong', function(err, res){
             if(error){
                console.log(error);
             } else {

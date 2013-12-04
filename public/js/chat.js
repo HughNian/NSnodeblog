@@ -78,7 +78,6 @@ $(".chatbox").click(function(){
   $.get('/getchats?from_user='+from_user, function(ret){//读取聊天信息
     var old_chats = {};
     if(ret.result == 1){
-      console.log(ret.data);
       old_chats = ret.data;
     }
     //初始化一些数据
@@ -100,40 +99,49 @@ $(".chatbox").click(function(){
       }
       if($(".chatbox").html().match("您有")){
         var last_username = username[username.length-1];
-        if(refresh_tag == true){
-          if(old_chats[last_username] != ""){
-             //var old_five_chats = old_chats[last_username].slice(-5);
-             user_msg[last_username] = old_chats[last_username].slice(-5);
+        if(typeof old_chats[last_username] != "undefined"){
+          var message = old_chats[last_username].slice(-5);
+          for(var k in message){
+            if(typeof message[k].to_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
+            if(typeof message[k].from_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+message[k].from_msg+'</p><div>');
+          }
+        } else {
+          for(var k in user_msg[last_username]){
+            if(typeof user_msg[last_username][k].to_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[last_username][k].to_msg+'</p><div>');
+            if(typeof user_msg[last_username][k].from_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[last_username][k].from_msg+'</p><div>');
           }
         }
         userlist[userlist.length-1] = "<span class='username' style='background:#E6DB74' data-name="+last_username+" id="+key+">"+last_username+"<label class='deluser'>X</label></span>";
         $(".userlist").html(userlist.join(""));
-        for(var k in user_msg[last_username]){
-        if(typeof user_msg[last_username][k].to_msg != "undefined")
-          p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[last_username][k].to_msg+'</p><div>');
-        if(typeof user_msg[last_username][k].from_msg != "undefined")
-          p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[last_username][k].from_msg+'</p><div>');
-        }
         $(".chatname").html(last_username);
       } else {
         var now_chat = $(".chatname").html();
-        if(refresh_tag == true){
-          if(old_chats[now_chat] != ""){
-             //var old_five_chats = old_chats[now_chat].slice(-5);
-             user_msg[now_chat] = old_chats[now_chat].slice(-5);
+        if(typeof old_chats[now_chat] != "undefined"){
+          var message = old_chats[now_chat].slice(-5);
+          for(var k in message){
+            if(typeof message[k].to_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
+            if(typeof message[k].from_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+message[k].from_msg+'</p><div>');
+          }
+        } else {
+          for(var k in user_msg[now_chat]){
+            if(typeof user_msg[now_chat][k].to_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[now_chat][k].to_msg+'</p><div>');
+            if(typeof user_msg[now_chat][k].from_msg != "undefined")
+              p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[now_chat][k].from_msg+'</p><div>');
           }
         }
+        
         $(".userlist").html(userlist.join(""));
         $(".username").each(function(){
            if(_this.attr("data-name") == now_chat)
              _this.attr("style","background:#E6DB74");
         });
-        for(var k in user_msg[now_chat]){
-        if(typeof user_msg[now_chat][k].to_msg != "undefined")
-          p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[now_chat][k].to_msg+'</p><div>');
-        if(typeof user_msg[now_chat][k].from_msg != "undefined")
-          p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[now_chat][k].from_msg+'</p><div>');
-        }
         $(".chatname").html(now_chat);
       }
      
@@ -143,10 +151,8 @@ $(".chatbox").click(function(){
       $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
     } else if (user_count == 1 || $(".chatbox").html().match("您有")){
       for(var key in user_msg){
-        if(refresh_tag == true){
-          if(old_chats[key] != ""){
-             var message = old_chats[key].slice(-5);
-          }
+        if(typeof old_chats[key] != "undefined"){
+          var message = old_chats[key].slice(-5);
           for(var k in message) {
             if(typeof message[k].to_msg != "undefined")
               p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
@@ -168,7 +174,6 @@ $(".chatbox").click(function(){
     }
     $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);
     $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
-    refresh_tag = false;
   });
 });
 
@@ -237,17 +242,35 @@ function sendmsg()
 
 function showUserMsg(name)
 {
-  var p = [];
-  for(var k in user_msg[name]){
-      if(typeof user_msg[name][k].to_msg != "undefined")
-        p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[name][k].to_msg+'</p><div>');
-      if(typeof user_msg[name][k].from_msg != "undefined")
-        p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[name][k].from_msg+'</p><div>');
-  }
-  $(".chatname").html(name);
-  $(".sendlist").html(p.join(""));
-  $(".sendbox").css("display","block");//使后面可以计算出 #sendlist的scrollTop 
-  $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);
+  var from_user = $("#avatar").attr("alt");
+  $.get('/getchats?from_user='+from_user, function(ret){//读取聊天信息
+    var old_chats = {};
+    if(ret.result == 1){
+      old_chats = ret.data;
+    }
+    var p = [];
+    console.log(old_chats);
+    if(typeof old_chats[name] != "undefined"){
+      var message = old_chats[name].slice(-5);
+      for(var k in message){
+        if(typeof message[k].to_msg != "undefined")
+          p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
+        if(typeof message[k].from_msg != "undefined")
+          p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+message[k].from_msg+'</p><div>');
+      }
+    } else {
+      for(var k in user_msg[name]){
+          if(typeof user_msg[name][k].to_msg != "undefined")
+            p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+user_msg[name][k].to_msg+'</p><div>');
+          if(typeof user_msg[name][k].from_msg != "undefined")
+            p.push('<div class="chatdiv" id="chatdiv"><p class="p2">'+user_msg[name][k].from_msg+'</p><div>');
+      }
+    }
+    $(".chatname").html(name);
+    $(".sendlist").html(p.join(""));
+    $(".sendbox").css("display","block");//使后面可以计算出 #sendlist的scrollTop 
+    $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);
+  });
 }
 
 function showUserList()
