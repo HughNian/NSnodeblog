@@ -40,8 +40,8 @@ exports.index = function (req, res, next) {
            socket.on('message', function(data){
                  //dataformat:{to:'User1',from:'User2',msg:'msg'}
                  console.log('this is client push message:'+data.msg);
-                 clients[data.to].emit('message', {to:data.to, from:data.from, msg:data.msg});
-                 clients[data.from].emit('message', {to:data.to, from:data.from, msg:data.msg});
+                 clients[data.to].emit('message', {to:data.to, from:data.from, msg:data.msg});//发给目标用户
+                 clients[data.from].emit('message', {to:data.to, from:data.from, msg:data.msg});//发给自己
                  //socket.broadcast.emit('broadcast', msg); //广播消息
            });
 

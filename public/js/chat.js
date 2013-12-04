@@ -4,7 +4,6 @@
 socket = io.connect('http://127.0.0.1:3000');
 
 user_msg = {};//全局用户聊天信息对象
-refresh_tag = true;
 
 $(".sendbutton").click(function(){
   sendmsg();
@@ -26,7 +25,13 @@ socket.on('message', function(data){
       user_msg[data.from].push({"from_msg":data.msg});
       var now_user = $("#avatar").attr("alt");
       delete user_msg[now_user];
-   savechats(now_user, data.from, user_msg);//保存聊天记录
+   
+   /*** 保存聊天记录 start ***/
+   var to_user = data.from;
+   if(now_user == to_user) var to_user = $(".chatname").html();
+   savechats(now_user, to_user, user_msg);
+   /*** 保存聊天记录 end ***/
+
    user_count = 0;
    msg_count = 0;
    var from_msg = [];
@@ -68,7 +73,6 @@ socket.on('broadcast', function(msg){
 $(".avatar").live('click', function(){
   $(".chatname").html($(this).attr('title'));
   $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
-  refresh_tag = false;
 });
 
 //打开消息盒
@@ -100,7 +104,8 @@ $(".chatbox").click(function(){
       if($(".chatbox").html().match("您有")){
         var last_username = username[username.length-1];
         if(typeof old_chats[last_username] != "undefined"){
-          var message = old_chats[last_username].slice(-5);
+          //var message = old_chats[last_username].slice(-6);
+          var message = old_chats[last_username];
           for(var k in message){
             if(typeof message[k].to_msg != "undefined")
               p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
@@ -121,7 +126,8 @@ $(".chatbox").click(function(){
       } else {
         var now_chat = $(".chatname").html();
         if(typeof old_chats[now_chat] != "undefined"){
-          var message = old_chats[now_chat].slice(-5);
+          //var message = old_chats[now_chat].slice(-6);
+          var message = old_chats[now_chat];
           for(var k in message){
             if(typeof message[k].to_msg != "undefined")
               p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
@@ -150,9 +156,11 @@ $(".chatbox").click(function(){
       $(".userlist").css({'height':'0'}).show().animate({'height':'440px'});
       $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
     } else if (user_count == 1 || $(".chatbox").html().match("您有")){
+      console.log(old_chats);
       for(var key in user_msg){
         if(typeof old_chats[key] != "undefined"){
-          var message = old_chats[key].slice(-5);
+          //var message = old_chats[key].slice(-6);
+          var message = old_chats[key];
           for(var k in message) {
             if(typeof message[k].to_msg != "undefined")
               p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
@@ -209,10 +217,10 @@ $(".deluser").live('click', function(event){
 });
 
 $(".gb").click(function(){
-   $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
-   $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
-   var from_user = $("#avatar").attr("alt");
-   var to_user = $(".chatname").html();
+  $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
+  $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
+  var from_user = $("#avatar").attr("alt");
+  var to_user = $(".chatname").html();
 });
 
 $(".zxh").click(function(){
@@ -249,9 +257,9 @@ function showUserMsg(name)
       old_chats = ret.data;
     }
     var p = [];
-    console.log(old_chats);
     if(typeof old_chats[name] != "undefined"){
-      var message = old_chats[name].slice(-5);
+      //var message = old_chats[name].slice(-6);
+      var message = old_chats[name];
       for(var k in message){
         if(typeof message[k].to_msg != "undefined")
           p.push('<div class="chatdiv" id="chatdiv"><p class="p1">'+message[k].to_msg+'</p><div>');
@@ -319,10 +327,7 @@ function stopBubble(e){
 
 //保存聊天信息
 function savechats(from_user, to_user, user_msg){
+  alert(from_user);
+  alert(to_user);
   $.post('/setchats', {"from_user":from_user,"to_user":to_user,"user_msg":user_msg}, function(ret){});
 }
-
-//刷新页面时存储聊天信息
-$(window).keydown(function(e){
-  refresh_tag = true;
-});

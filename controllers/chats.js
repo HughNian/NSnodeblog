@@ -17,13 +17,23 @@ exports.setchats = function(req, res, next)
            return next(error);
         }
         data = JSON.parse(data);
+        console.log("user_msg");
+        console.log(user_msg);
+        console.log("data");
+        console.log(data);
+        console.log('to_user');
+        console.log(to_user);
         var save_data = {};
         if(array_key_exists(to_user, data)){
+          console.log("add_msg");
+          console.log(user_msg[to_user][user_msg[to_user].length-1]);
           data[to_user].push(user_msg[to_user][user_msg[to_user].length-1]);
           save_data = data;
         } else {
           save_data = user_msg
         }
+        console.log('save_data');
+        console.log(save_data);
         Chats.setChats(from_user, JSON.stringify(save_data), function(error){
           if(error){
              return next(error);
