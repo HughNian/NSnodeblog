@@ -24,11 +24,17 @@ exports.setchats = function(req, res, next)
         console.log('to_user');
         console.log(to_user);
         var save_data = {};
-        if(array_key_exists(to_user, data)){
-          console.log("add_msg");
-          console.log(user_msg[to_user][user_msg[to_user].length-1]);
-          data[to_user].push(user_msg[to_user][user_msg[to_user].length-1]);
-          save_data = data;
+        if(data != null){
+          if(array_key_exists(to_user, data)){
+            console.log("add_msg");
+            console.log(user_msg[to_user][user_msg[to_user].length-1]);
+            data[to_user].push(user_msg[to_user][user_msg[to_user].length-1]);
+            save_data = data;
+          } else {
+            console.log('here');
+            data[to_user] = new Array(user_msg[to_user][user_msg[to_user].length-1]);
+            save_data = data;
+          }
         } else {
           save_data = user_msg
         }
