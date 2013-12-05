@@ -4,6 +4,7 @@
 socket = io.connect('http://127.0.0.1:3000');
 
 user_msg = {};//全局用户聊天信息对象
+chat_users = [];
 
 $(".sendbutton").click(function(){
   sendmsg();
@@ -71,8 +72,27 @@ socket.on('broadcast', function(msg){
 //点击用户头像打开聊天窗口
 $(".avatar").live('click', function(){
   var name = $(this).attr('title');
+  var name_exists = $(".chatname").html();
+  var userlist = [];
+  if(name_exists != "" && !in_names(name_exists, chat_users)){
+    chat_users.push(name_exists);
+  }
+  if(!in_names(name, chat_users)){
+    chat_users.push(name);
+  }
   showUserMsg(name);
   $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+  if(chat_users.length > 1){
+    for(var key in chat_users){
+       userlist.push("<span class='username' data-name="+chat_users[key]+">"+chat_users[key]+"<label class='deluser'>X</label></span>");
+    }
+    $(".userlist").html(userlist.join(""));
+    $(".username").each(function(){
+      if($(this).attr("data-name") == name)
+      $(this).attr("style","background:#E6DB74");
+    });
+    $(".userlist").css({'height':'0'}).show().animate({'height':'440px'});
+  }
 });
 
 //打开消息盒
@@ -213,6 +233,7 @@ $(".deluser").live('click', function(event){
   var username = $(".username").last().attr("data-name");
   showUserMsg(username);
   delete user_msg[del_user];
+  del_name(del_user, chat_users);
   msg_count_old -= 1;
 });
 
@@ -221,9 +242,12 @@ $(".gb").click(function(){
   $(".userlist").hide();
   var del_user = $(".chatname").html();
   delete user_msg[del_user];
+  del_name(del_user, chat_users);
   $('.username').each(function(){
     delete user_msg[$(this).attr('data-name')];
+    del_name($(this).attr('data-name'), chat_users);
   });
+  console.log(chat_users);
   msg_count_old = 0;
 });
 
@@ -332,4 +356,18 @@ function stopBubble(e){
 //保存聊天信息
 function savechats(from_user, to_user, user_msg){
   $.post('/setchats', {"from_user":from_user,"to_user":to_user,"user_msg":user_msg}, function(ret){});
+}
+
+function in_names(name, names)
+{
+  for(var key in names){
+     if(name == names[key]) return true;
+  }
+  return false;
+}
+
+function del_name(name, names){
+  for(var key in names){
+    if(name == names[key]) chat_users = names.slice(0, key);
+  }
 }
