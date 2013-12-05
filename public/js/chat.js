@@ -4,7 +4,7 @@
 socket = io.connect('http://127.0.0.1:3000');
 
 user_msg = {};//全局用户聊天信息对象
-chat_users = [];
+chat_users = [];//全局聊天用户对象
 
 $(".sendbutton").click(function(){
   sendmsg();
@@ -247,7 +247,7 @@ $(".gb").click(function(){
     delete user_msg[$(this).attr('data-name')];
     del_name($(this).attr('data-name'), chat_users);
   });
-  console.log(chat_users);
+  $(".chatname").html("");
   msg_count_old = 0;
 });
 

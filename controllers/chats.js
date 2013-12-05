@@ -31,7 +31,7 @@ exports.setchats = function(req, res, next)
             }
           }
         } else {
-          save_data = user_msg
+          save_data = user_msg;
         }
         Chats.setChats(from_user, JSON.stringify(save_data), function(error){
           if(error){
