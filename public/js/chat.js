@@ -70,7 +70,8 @@ socket.on('broadcast', function(msg){
 
 //点击用户头像打开聊天窗口
 $(".avatar").live('click', function(){
-  $(".chatname").html($(this).attr('title'));
+  var name = $(this).attr('title');
+  showUserMsg(name);
   $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
 });
 
