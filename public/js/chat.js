@@ -63,7 +63,6 @@ socket.on('message', function(data){
 
 //监听广播消息(群聊)
 socket.on('broadcast', function(msg){
-   console.log('client get message'+msg);
    var p = '<div class="chatdiv" id="chatdiv"><p class="p2">'+msg+'</p><div>';
    $(".sendlist").append(p);
    $('#sendlist').scrollTop($('#sendlist')[0].scrollHeight+$('#chatdiv').height()+50);//到scroll底部
@@ -208,19 +207,23 @@ $(".deluser").live('click', function(event){
   $(this).parent().remove();
   var from_user = $("#avatar").attr("alt");
   var del_user = $(this).parent().attr("data-name");
-  delete user_msg[del_user];
-  user_count -= 1;
   var num = $(".username").length;
   if(num == 1) $(".userlist").hide();
   var username = $(".username").last().attr("data-name");
   showUserMsg(username);
+  delete user_msg[del_user];
+  msg_count_old -= 1;
 });
 
 $(".gb").click(function(){
-  $(".sendbox").css({'height':'440px'}).hide().animate({'height':'0'});
-  $(".userlist").css({'height':'440px'}).hide().animate({'height':'0'});
-  var from_user = $("#avatar").attr("alt");
-  var to_user = $(".chatname").html();
+  $(".sendbox").hide();
+  $(".userlist").hide();
+  var del_user = $(".chatname").html();
+  delete user_msg[del_user];
+  $('.username').each(function(){
+    delete user_msg[$(this).attr('data-name')];
+  });
+  msg_count_old = 0;
 });
 
 $(".zxh").click(function(){
@@ -284,16 +287,16 @@ function showUserMsg(name)
 function showUserList()
 {
   var userlist = [];
-   for(var key in user_msg){
-       userlist.push("<span class='username' data-name="+key+">"+key+"<label class='deluser'>X</label></span>");
-   }
-   var now_chat = $(".chatname").html();
-   $(".userlist").html(userlist.join(""));
-   $(".username").each(function(){
-      if($(this).attr("data-name") == now_chat)
-        $(this).attr("style","background:#E6DB74");
-   });
-   $(".userlist").show();
+  for(var key in user_msg){
+    userlist.push("<span class='username' data-name="+key+">"+key+"<label class='deluser'>X</label></span>");
+  }
+  var now_chat = $(".chatname").html();
+  $(".userlist").html(userlist.join(""));
+  $(".username").each(function(){
+    if($(this).attr("data-name") == now_chat)
+    $(this).attr("style","background:#E6DB74");
+  });
+  $(".userlist").show();
 }
 
 //输入框警告提示
@@ -327,7 +330,5 @@ function stopBubble(e){
 
 //保存聊天信息
 function savechats(from_user, to_user, user_msg){
-  alert(from_user);
-  alert(to_user);
   $.post('/setchats', {"from_user":from_user,"to_user":to_user,"user_msg":user_msg}, function(ret){});
 }
