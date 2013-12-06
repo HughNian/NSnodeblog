@@ -176,9 +176,8 @@ $(".chatbox").click(function(){
       $(".userlist").css({'height':'0'}).show().animate({'height':'440px'});
       $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
     } else if (user_count == 1 || $(".chatbox").html().match("您有")){
-      console.log(old_chats);
       for(var key in user_msg){
-        if(typeof old_chats[key] != "undefined"){
+        if(array_key_exists(key, old_chats)){
           //var message = old_chats[key].slice(-6);
           var message = old_chats[key];
           for(var k in message) {
@@ -247,7 +246,6 @@ $(".gb").click(function(){
     delete user_msg[$(this).attr('data-name')];
     del_name($(this).attr('data-name'), chat_users);
   });
-  $(".chatname").html("");
   msg_count_old = 0;
 });
 
@@ -262,6 +260,8 @@ $(".zxh").click(function(){
 function sendmsg()
 {
   var msg = $.trim($(".area").val());
+  msg = replace_em(msg);
+  console.log(msg);
   if(msg == ""){
       colorKit();
       return false;
@@ -282,10 +282,10 @@ function showUserMsg(name)
   $.get('/getchats?from_user='+from_user, function(ret){//读取聊天信息
     var old_chats = {};
     if(ret.result == 1){
-      old_chats = ret.data;
+      var old_chats = ret.data;
     }
     var p = [];
-    if(typeof old_chats[name] != "undefined"){
+    if(array_key_exists(name, old_chats)){
       //var message = old_chats[name].slice(-6);
       var message = old_chats[name];
       for(var k in message){
@@ -366,8 +366,25 @@ function in_names(name, names)
   return false;
 }
 
+function array_key_exists(key, arr) {
+  for(var k in arr) {
+    if( k == key) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function del_name(name, names){
   for(var key in names){
     if(name == names[key]) chat_users = names.slice(0, key);
   }
+}
+
+function replace_em(str){
+  //str = str.replace(/\</g,'&lt;');
+  //str = str.replace(/\>/g,'&gt;');
+  //str = str.replace(/\n/g,'<br/>');
+  str = str.replace(/\[em_([0-9]*)\]/g,'<img src="/images/face/$1.gif" border="0" />');
+  return str;
 }

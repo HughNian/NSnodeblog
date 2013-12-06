@@ -142,7 +142,7 @@
 .sendbox .bar .emotion {width:45px;height:20px;background:url(/images/icon.gif) no-repeat 2px 2px; padding-left:45px; cursor: pointer}
 .sendbox .bar .emotion:hover {background-position: 2px -28px;}
 .sendbox .sendarea {width:100%; height:98px; background:#FFF}
-.sendbox .sendarea .area {overflow-y:auto;width:100%; height:98px; resize:none; border: 0; outline: 0}
+.sendbox .sendarea .area {overflow-y:auto;width:100%; height:98px; resize:none; border: 0; outline: 0; font-size: 12px;}
 .sendbox .buttonarea {width:100%; height:22px; background:#f0f0f0}
 .sendbox .buttonarea .sendbutton {background:url(/images/button.png);float:right;width:50px;height:25px;outline:none}
 .chatbox {position:fixed; right:80px; bottom:0px; width:120px; height:25px; border:1px solid #afafaf; background:url(/images/chat_bg.gif) repeat-x 0 center;display:none;text-align:center; z-index:9999; cursor:pointer}
@@ -158,7 +158,7 @@
 .com_form p{height:28px; line-height:28px; position:relative}
 span.emotion{width:42px; height:20px; background:url(icon.gif) no-repeat 2px 2px; padding-left:20px; cursor:pointer}
 span.emotion:hover{background-position:2px -28px}
-.qqFace{margin-top:4px;background:#fff;padding:2px;border:1px #dfe6f6 solid;position: fixed;height:140px}
+.qqFace{margin-top:4px;background:#fff;padding:2px;border:1px #dfe6f6 solid;position:absolute;height:125px}
 .qqFace table td{padding:0px;}
 .qqFace table td img{cursor:pointer;border:1px #fff solid;}
 .qqFace table td img:hover{border:1px #0066cc solid;}

@@ -33,16 +33,14 @@
 			$(this).parent().append(strFace);
 			var offset = $(this).position();
 			var top = offset.top + $(this).outerHeight();
-			$('#'+id).css('top',top-50);
-			$('#'+id).css('bottom',top);
-			//$('#'+id).css('left',offset.left);
+			$('#'+id).css('top',top-150);
 			$('#'+id).show();
 			e.stopPropagation();
 		});
 
-		$(document).click(function(){
-			$('#'+id).hide();
-			$('#'+id).remove();
+		assign.click(function(){
+		    $('#'+id).hide();
+		    $('#'+id).remove();
 		});
 	};
 
