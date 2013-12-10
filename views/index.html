@@ -149,10 +149,10 @@
         <% } %>
         <li class="pages"><a href="http://wefriends001.diandian.com/#">Pages</a></li>
       </ul>
-      <div id="panels" style="height: 912px;">
-        <div id="profile" class="box" style="height: 912px; overflow: hidden; padding: 0px; width: 299px;">
+      <div id="panels" style="width: 299px; height: 912px;">
+        <div id="profile" class="box" style="height: 493px; overflow: hidden; padding: 0px; width: 299px;">
           <div class="jspContainer" style="width: 299px; height: 912px;">
-            <div class="jspPane" style="padding: 40px 30px 100px; top: 0px; width: 239px;">
+            <div class="jspPane" style="padding: 40px 30px 100px; top: 0px; width: 250px;">
               <div id="me" class="me">
                 <% if(userinfo){%>
                 <img id="avatar" src="<%= userinfo.avatar%>" alt="<%= userinfo.name %>" style="min-width: 150px; min-height: 150px">
@@ -172,9 +172,8 @@
         </div>
         <!-- close PROFILE -->
         
-        <div id="pages" class="box" style="height: 912px; overflow: hidden; padding: 0px; width: 299px;">
-          <div class="jspContainer" style="width: 299px; height: 912px;">
-            <div class="jspPane" style="padding: 40px 30px 100px; top: 0px; width: 239px;">
+        <div id="pages" class="box">
+          <div class="jspContainer">
               <form id="searchForm" action="/images/TAKE360精品生活.htm" method="get">
                 <input id="searchField" type="text" name="q" onBlur="if (this.value == &#39;&#39;) {this.value = &#39;搜索&#39;;}" onFocus="if (this.value == &#39;搜索&#39;) {this.value = &#39;&#39;;}" value="搜索">
               </form>
@@ -186,7 +185,6 @@
                 <li><a href="http://wefriends001.diandian.com/rss" title="RSS Feed">订阅</a></li>
                 <li><a href="/logout" title="退出">退出</a></li>
               </ul>
-            </div>
           </div>
         </div>
         <!-- close PAGES --> 
@@ -220,23 +218,6 @@
       assign:'area', //给那个控件赋值
       path:'/images/face/'  //表情存放的路径
     });
-    
-    //var str = $("#area").val();
-    //$("#show").html(replace_em(str));
-  });
-
-  function replace_em(str){
-    str = str.replace(/\</g,'&lt;');
-    str = str.replace(/\>/g,'&gt;');
-    str = str.replace(/\n/g,'<br/>');
-    str = str.replace(/\[em_([0-9]*)\]/g,'<img src="face/$1.gif" border="0" />');
-    return str;
-  }
-
-  $(document).click(function(){
-    alert('shit');
-    $('#facebox').hide();
-    $('#facebox').remove();
   });
 </script>
 <% }%>
