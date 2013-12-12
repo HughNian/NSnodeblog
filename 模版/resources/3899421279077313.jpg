@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Error>
-  <Code>NoSuchKey</Code>
-  <Message>The specified key does not exist.</Message>
-  <Key>images/album/img0//3899421279077313.jpg</Key>
-  <RequestId>526F0D029908D0E11A8FF03A</RequestId>
-  <HostId>xiamiimg.oss-internal.aliyuncs.com</HostId>
-</Error>
