@@ -99,7 +99,7 @@ $(".avatar").live('click', function(){
 $(".chatbox").click(function(){
   var _this = $(this);
   var from_user = $("#avatar").attr("alt");
-  $.get('/getchats?from_user='+from_user, function(ret){//读取聊天信息
+  $.get('/getchats?from_user='+from_user+'timetag'+Date.parse(new Date()), function(ret){//读取聊天信息
     var old_chats = {};
     if(ret.result == 1){
       old_chats = ret.data;
@@ -279,11 +279,12 @@ function sendmsg()
 function showUserMsg(name)
 {
   var from_user = $("#avatar").attr("alt");
-  $.get('/getchats?from_user='+from_user, function(ret){//读取聊天信息
+  $.get('/getchats?from_user='+from_user+'&timetag'+Date.parse(new Date()), function(ret){//读取聊天信息，timetag参数用于ie获取最新消息记录而不取缓存
     var old_chats = {};
     if(ret.result == 1){
       var old_chats = ret.data;
     }
+
     var p = [];
     if(array_key_exists(name, old_chats)){
       //var message = old_chats[name].slice(-6);
