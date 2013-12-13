@@ -247,6 +247,7 @@ p a:hover {
 .ibg {
   background: url(/images/static/ibg.png) no-repeat;
 }
+.loginbg {background: url(/images/static/login-24.png) no-repeat;}
 .iWrap {
   width: 100%;
   height: 100%;
@@ -301,6 +302,60 @@ p a:hover {
   color: #fff;
   position: absolute;
   top: -30px;
+}
+.iWrap .cont{
+  width:100%;
+  height:42%;
+  background: #E2E2E4;
+  position: absolute;
+  bottom: 0px;
+  z-index: 5;
+  display: none;
+}
+.iWrap .ldiv{
+  width:700px;
+  height:300px;
+  margin:0 auto;
+  margin-top:25px;
+  z-index: 10;
+}
+.iWrap .ldiv span {display: block;text-indent: -9999px;}
+.iWrap .rdiv{
+  width:700px;
+  height:300px;
+  margin:0 auto;
+  margin-top:25px;
+  z-index: 10;
+  display: none;
+}
+.iWrap .rdiv span {display: block;text-indent: -9999px;}
+.iWrap ul li {margin-top: 12px;}
+.iWrap .input{
+  width:332px;
+  height:45px;
+  font-size:18px;
+  line-height: 45px;
+  font-family: "微软雅黑";
+  border:1px solid #CCC;
+  border-radius: 7px; 
+}
+.iWrap .loginbutton{
+  width:332px;
+  height:40px;
+  cursor:pointer;
+  background-position: 0 -871px;
+}
+.iWrap .loginbutton:hover{
+  background-position: 0 -925px;
+}
+.iWrap .regbutton{
+  width:332px;
+  height:40px;
+  cursor:pointer;
+  background-position: 0 -975px;
+}
+.iWrap .regbutton:hover{
+  background-position: 0 -1028px;
 }
 .iForm {
   display: none;
@@ -409,6 +464,44 @@ p a:hover {
   background-position: 0px -399px;
   padding: 5px 10px;
 }
+#lSubmit {width:620px;height:70px;float:left;margin-left:145px}
+#lSubmit span{
+  display: none;
+  text-indent: -9999px;
+}
+#lSubmit .reg {
+  width: 196px;
+  height: 55px;
+  float:left;
+  margin-left:5px;
+  background-position: 0px -194px;
+  cursor: pointer;
+}
+#lSubmit .login {
+  width: 196px;
+  height: 55px;
+  float:left;
+  margin-left:5px;
+  background-position: 0px -260px;
+  cursor: pointer;
+}
+#lSubmit .explorer {
+  width: 196px;
+  height: 55px;
+  float:left;
+  margin-left:5px;
+  background-position: 0px -328px;
+  cursor: pointer;
+}
+#lSubmit .reg:hover {
+  background-position: -201px -194px;
+}
+#lSubmit .login:hover {
+  background-position: -201px -260px;
+}
+#lSubmit .explorer:hover {
+  background-position: -201px -328px;
+}
 .ieForm {
   height: 50px;
   top: 20px;
@@ -472,29 +565,52 @@ p a:hover {
   <div class="iBgWrap"><img id="iPbg" class="iPbg" data-pinit="registered" style="width: 1533px; display: inline;">
     <div id="iForm" class="iForm" style="display: block;">
       <div class="iLogo ibg"></div>
-      <form id="iLoginForm" action="/login" method="post">
-        <input name="_hash" type="hidden" value="0.6902282619848847">
-        <div id="iEmail" class="iEmail ibg iiBox iEmail2"><span id="iTips" class="iTips ibg" style="display: none;">免注册，输入邮箱。<a id="iWantPwd" href="javascript:;">注册</a></span><span class="ibg iEmailbg iiBg"></span>
-          <input id="email" type="text" name="email" tabindex="1" autocomplete="off">
-        </div>
-        <div id="iPwd" class="iPwd ibg iiBox iPwd2"><span class="ibg iPwdbg iiBg"></span>
-          <input id="pwd" name="password" tabindex="2" autocomplete="off" type="password">
-        </div>
-        <a id="iSubmit" class="iSubmit ibg iSubmit2">
-        <button tabindex="3" type="submit"><span class="dz">登录</span></button>
-        </a>
-        <input type="hidden" name="_csrf" value="4f84cc62ab51f320bb7b2253b8ea00dc97721863">
-      </form>
+
+      <h2 style="color:#fff;letter-spacing: 10px;margin-bottom:25px">一种有趣的记录方式</h2>
+      
+      <div id="lSubmit">
+      <a class="reg loginbg">
+      <button tabindex="1"><span>注册</span></button>
+      </a>
+      <a class="login loginbg">
+      <button tabindex="2"><span>登录</span></button>
+      </a>
+      <!--<a class="explorer loginbg" id="explorer">
+      <button tabindex="3"><span>Explorer</span></button>
+      </a>-->
+      </div>
     </div>
     <div id="iFoot" class="iFoot" style="display: block;">
       <div class="ifText">Nsnodeblog ©2013</div>
       <a id="explorer" href="javascript:;" title="探索" class="ibg">Explorer</a></div>
-  </div>
+    </div>
+    <div class="cont">
+      <div class="ldiv">
+        <form method="post" action="/login" name="loginForm" id="loginForm">
+          <ul>
+            <li><input name="name" id="lname" tabindex="1" autocomplete="off" class="input" placeholder="用户名"></li>
+            <li><input name="pass" id="lpass" tabindex="2" autocomplete="off" type="password" class="input" placeholder="密码"></li>
+            <li><input type="button" tabindex="3" class="loginbutton loginbg"><span>登录</span></li>
+          </ul>
+        </form>
+      </div>
+      <div class="rdiv">
+        <form method="post" action="/register" name="reisterForm" id="reisterForm">
+          <ul>
+            <li><input name="email" tabindex="1" autocomplete="off" class="input" id="email" placeholder="邮箱"></li>
+            <li><input name="pass" tabindex="2" autocomplete="off" type="password" class="input" id="rpass" placeholder="密码"></li>
+            <li><input tabindex="3" type="text" name="name" autocomplete="off" class="input" id="rname" value="" placeholder="用户名"></li>
+            <li><input type="button" tabindex="4" class="regbutton loginbg"><span>注册</span></li>
+          </ul>
+        </form>
+      </div>
+    </div>
 </div>
+
 <div id="ieBody" class="ieBody" style="display: none; opacity: 100; margin-top: 0px;"><a id="ieBack" href="javascript:;" class="ibg ieBack"></a>
   <div class="top">
     <div id="iForm2" class="iForm ieForm">
-      <form id="iLoginForm2" action="http://wujbblog.duapp.com/home/login" method="post">
+      <form id="iLoginForm2" action="/login" method="post">
         <div class="iEmail ibg iiBox"><span class="ibg iEmailbg iiBg"></span>
           <input name="email" tabindex="1" autocomplete="off">
         </div>
@@ -504,7 +620,6 @@ p a:hover {
         <a class="iSubmit ibg">
         <button tabindex="3" type="submit"><span class="dz">登录</span></button>
         </a>
-        <input type="hidden" name="_csrf" value="4f84cc62ab51f320bb7b2253b8ea00dc97721863">
       </form>
     </div>
   </div>
@@ -524,7 +639,9 @@ p a:hover {
 $(function(){
   var img = '/images/bg/'+Math.floor(Math.random()*6)+'.jpg';
   $('#iPbg').attr("src", img).fadeIn("slow");
-  console.log(img);
+  <%if (locals.error) { %>
+  base.tip('<span class="pbg tipres tiperr"><%= error %></span>');
+  <% } %>
 });
 </script>
 </body>

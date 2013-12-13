@@ -25,32 +25,36 @@ exports.register = function(req, res, next){
     var re_pass = sanitize(req.body.re_pass).trim();
     var signature = sanitize(req.body.signature).trim();
     
+    /*
     if(name ==='' || pass === '' || re_pass === '' || email === ''){
         res.render('sign/register', {error:'信息不完整', name: name, email: email});
         return;	
+    }*/
+    if(name ==='' || pass === '' || email === ''){
+        res.render('sign/login', {error:'信息不完整', name: name, email: email});
+        return;
     }
     
     if(name.length < 5) {
-        res.render('sign/register', {error: '用户名至少需要5个字符', name: name, email:email});	
+        res.render('sign/login', {error: '用户名至少需要5个字符', name: name, email:email});	
         return;
     }
     
     try{
         check(name, '用户名只能使用0-9, a-z, A-Z').isAlphanumeric();	
     } catch(e) {
-    	res.render('sign/register', {error: e.message, name: name, email:email});
+    	res.render('sign/login', {error: e.message, name: name, email:email});
     	return;
     }
-    
+    /*
     if(pass !== re_pass){
     	res.render('sign/register', {error: '两次密码不一样', name:name, email:email});
     	return;
-    }
-    
+    }*/
     try{
     	check(email, '不正确的电子邮箱').isEmail();
     } catch(e) {
-    	res.render('sign/register', {error:e.message, name:name, email:email});
+    	res.render('sign/login', {error:e.message, name:name, email:email});
     	return;
     }
     
@@ -61,7 +65,7 @@ exports.register = function(req, res, next){
     	}
     	
     	if(users.length > 0){
-    		res.render('sign/register', {error: '用户名或邮箱已被使用', name:name, email:email});
+    		res.render('sign/login', {error: '用户名或邮箱已被使用', name:name, email:email});
     		return;
     	}
     	
@@ -94,7 +98,7 @@ exports.showLogin = function(req, res){
 exports.login = function(req, res, next){
 	var name = sanitize(req.body.name).trim().toLowerCase();
 	var pass = sanitize(req.body.pass).trim();
-
+    
 	if(!name || !pass){
 		return res.render('sign/login', {error: '信息不完整'});
 	}
