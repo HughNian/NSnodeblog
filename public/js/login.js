@@ -78,14 +78,26 @@ $(function(){
 	})
 	//intial
 	$(".reg").click(function(){
-		$(".cont").slideToggle(1000, 'easeOutCubic');
-		$(".ldiv").fadeIn();
-		$(".rdiv").fadeOut();
-	});
-	$(".login").click(function(){
-		$(".cont").slideToggle(1000, 'easeOutCubic');
+		var contdisplay = $(".cont").css("display");
+		if(contdisplay == "none"){
+			$("#iForm").animate({"margin-top":-190}, 100, 'easeOutCubic');
+		} else if (contdisplay == "block"){
+			$("#iForm").animate({"margin-top":-140}, 100, 'easeOutCubic');
+		}
+		$(".cont").slideToggle(500, 'easeOutCubic');
 		$(".rdiv").fadeIn();
 		$(".ldiv").fadeOut();
+	});
+	$(".login").click(function(){
+		var contdisplay = $(".cont").css("display");
+		if(contdisplay == "none"){
+			$("#iForm").animate({"margin-top":-190}, 100, 'easeOutCubic');
+		} else if (contdisplay == "block"){
+			$("#iForm").animate({"margin-top":-140}, 100, 'easeOutCubic');
+		}
+		$(".cont").slideToggle(500, 'easeOutCubic');
+		$(".ldiv").fadeIn();
+		$(".rdiv").fadeOut();
 	});
 	$(".regbutton").click(function(){
 	  var email = $("#email").val(),

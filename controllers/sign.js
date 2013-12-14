@@ -8,6 +8,9 @@ var User = require('../modules').User;
 
 //register
 exports.showRegister = function(req, res) {
+    if(req.session.user){
+        res.redirect('/');
+    }
     res.render('sign/register');
 };
 
@@ -86,6 +89,9 @@ exports.register = function(req, res, next){
 
 //login
 exports.showLogin = function(req, res){
+    if(req.session.user){
+        res.redirect('/');
+    }
 	req.session._loginReferer = req.headers.referer;
 	res.render('sign/login');
 };

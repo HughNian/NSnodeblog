@@ -24,5 +24,4 @@ module.exports = function(app) {
     app.get('/login', sign.showLogin);
     app.post('/login', sign.login);
     app.get('/logout', sign.logout);
-
 };
