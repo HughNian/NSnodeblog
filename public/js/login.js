@@ -67,6 +67,7 @@ $(function(){
 				if(errstr !== '') base.tip('<span class="pbg tipres tiperr">'+errstr+'</span>')
 			});
 		});
+	/*
 	$('#iLoginForm, #iLoginForm2').submit(function(){
 		var val = $(this).find('input[name="email"]').val();
 		var reg = /^\w+((-|\.)\w+)*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
@@ -75,7 +76,7 @@ $(function(){
 			return false;
 		}
 		return true
-	})
+	})*/
 	//intial
 	$(".reg").click(function(){
 		var contdisplay = $(".cont").css("display");
@@ -99,10 +100,10 @@ $(function(){
 		$(".ldiv").fadeIn();
 		$(".rdiv").fadeOut();
 	});
-	$(".regbutton").click(function(){
-	  var email = $("#email").val(),
-	      pass = $("#rpass").val(),
-	      name = $("#rname").val();
+	$("#reisterForm").submit(function(){
+	  var email = $(this).find('input[name="email"]').val(),
+	      pass = $(this).find('input[name="pass"]').val(),
+	      name = $(this).find('input[name="name"]').val();
 
 	  var reg = /^\w+((-|\.)\w+)*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
 	  if(email == ""){
@@ -118,12 +119,12 @@ $(function(){
 	    base.tip('<span class="pbg tipres tiperr">用户名不能为空</span>');
 	    return false;
 	  } else {
-	    $("#reisterForm").submit();
+	    return true;
 	  }
 	});
-	$(".loginbutton").click(function(){
-		var name = $("#lname").val(),
-			pass = $('#lpass').val();
+	$("#loginForm").submit(function(){
+		var name = $(this).find('input[name="name"]').val(),
+			pass = $(this).find('input[name="pass"]').val();
 		if(name == "" ){
 			base.tip('<span class="pbg tipres tiperr">用户名不能为空</span>');
 	    	return false;
@@ -131,7 +132,20 @@ $(function(){
 			base.tip('<span class="pbg tipres tiperr">密码不能为空</span>');
 	    	return false;
 		} else {
-			$("#loginForm").submit();
+			return true;
+		}
+	});
+	$("#iLoginForm2").submit(function(){
+		var name = $(this).find('input[name="name"]').val(),
+			pass = $(this).find('input[name="pass"]').val();
+		if(name == "" ){
+			base.tip('<span class="pbg tipres tiperr">用户名不能为空</span>');
+	    	return false;
+		} else if (pass == ""){
+			base.tip('<span class="pbg tipres tiperr">密码不能为空</span>');
+	    	return false;
+		} else {
+			return true;
 		}
 	});
 });
