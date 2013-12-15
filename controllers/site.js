@@ -40,7 +40,7 @@ exports.index = function (req, res, next) {
            clients[userinfo.name] = socket;//把当前用户的socket对象存在全局数组变量clients中，以实现点对点单聊
            socket.on('message', function(data){
                  //dataformat:{to:'User1',from:'User2',msg:'msg'}
-                 console.log('this is client push message:'+data.msg);
+                 //console.log('this is client push message:'+data.msg);
                  var msg = replace_em(data.msg);
                  if(typeof clients[data.to] === "undefined"){
                    Chats.getChats(data.to, function(error, user_msg){

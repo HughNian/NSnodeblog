@@ -121,9 +121,10 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	width: 55px;
+	width: 65px;
 	height: 100%;
 	z-index: 9999;
+  background: #FFFFFF;
 	background-size: cover;
 	border-left: #ccc 1px solid;
   overflow-y:auto;
@@ -163,3 +164,106 @@ span.emotion:hover{background-position:2px -28px}
 .qqFace table td img{cursor:pointer;border:1px #fff solid;}
 .qqFace table td img:hover{border:1px #0066cc solid;}
 #show{width:680px; margin:20px auto}
+
+.pbg {background: url(/images/static/pagebg.png) no-repeat}
+.headbar {width:100%;height:96px;background: url(/images/static/ifoot.png) repeat-x;background-position: 0 -138px;}
+.headbar .top-box {width:960px;height:96px;margin: 0 auto;}
+.headbar .top-box .n-logo {background-position: -618px 18px;text-decoration: none;color:#202326;outline: none;width: 260px;height: 90px;position:relative;float:left}
+.headbar .top-box .n-logo:active {background-position: -620px 19px}
+.headbar .top-box .top-nav {width:340px;height:50px;z-index:10px;position: absolute;top: 40px;right:200px}
+.headbar .top-box .top-nav a {width: 36px;height:36px;float:left;margin: 0 12px;display: inline-block}
+.headbar .top-box .top-nav .navhome {background-position: -297px 0}
+.headbar .top-box .top-nav .navcontent {background-position: -237px 0}
+.headbar .top-box .top-nav .navfriends {background-position: -354px 0}
+.headbar .top-box .top-nav .navsetting {background-position: -182px 0}
+.headbar .top-box .top-nav .navlogout {background-position: 0 0}
+.headbar .top-box .top-nav .navhome:hover {background-position: -297px -60px}
+.headbar .top-box .top-nav .navcontent:hover {background-position: -237px -60px}
+.headbar .top-box .top-nav .navfriends:hover {background-position: -354px -60px}
+.headbar .top-box .top-nav .navsetting:hover {background-position: -182px -60px}
+.headbar .top-box .top-nav .navlogout:hover {background-position: 0 -60px}
+
+.n-body {width:930px;margin: 35px auto}
+.clearfix {zoom:1}
+.fl {float: left; display: block}
+.fr {float: right; display: block}
+.facefriend {background-position:-410px -115px}
+.facefriend:hover {background-position:-408px -113px}
+.grayborder {border:1px solid #C3C3C5}
+.bluea {font-size:18px;color:#437272}
+.bluea:hover {color:#5F83A8;}
+.gray {font-size:12px;color:#CCC}
+.gray:hover {text-decoration: line;}
+.like {width:15px;height:22px;background-position:-182px -111px;padding-left:14px;font-size: 12px}
+.like:hover{background-position: -237px -111px}
+.n-body .bleft {width:670px}
+.n-body .bleft .ntoolbar {width:671px;height:115px;margin-bottom:20px;border-right:1px solid #E2E2E2;}
+.n-body .bleft .ntoolbar a {width:140px;height: 115px;float: left;padding: 0;margin: 0;cursor: pointer;display: block}
+.n-body .bleft .ntoolbar .tavatar {width:110px;background-position: 0 -157px}
+.n-body .bleft .ntoolbar .word {background-position: -110px -157px}
+.n-body .bleft .ntoolbar .pic {background-position: -250px -157px}
+.n-body .bleft .ntoolbar .video {background-position: -530px -157px}
+.n-body .bleft .ntoolbar .music {background-position: -390px -157px}
+.n-body .bleft .ntoolbar .tavatar:hover {width:110px;background-position: 0 -289px}
+.n-body .bleft .ntoolbar .word:hover {background-position: -110px -289px}
+.n-body .bleft .ntoolbar .pic:hover {background-position: -250px -289px}
+.n-body .bleft .ntoolbar .video:hover {background-position: -530px -289px}
+.n-body .bleft .ntoolbar .music:hover {background-position: -390px -289px}
+.n-body .bleft .ncontent {width:675px;}
+.n-body .bleft .ncontent dl {width:675px;padding-bottom:50px}
+.n-body .bleft .ncontent dl dt {width:80px;height:110px;float:left;text-align:center}
+.n-body .bleft .ncontent dl dt img {width:80px;height:80px;display: block}
+.n-body .bleft .ncontent dl dt .addfriend {width:80px;height:25px;padding:5px;background: #777}
+.n-body .bleft .ncontent dl dt .pbg {width:15px;height:12px;display: inline-block;margin: 0 5px}
+.n-body .bleft .ncontent dl dd {width:550px;margin-top:24px;position: relative;float:right;background: #fff;border: 1px solid #E2E2E2;box-shadow: 0 0 1px #ccc;-webkit-box-shadow: 0 0 1px #ccc;}
+.n-body .bleft .ncontent dl dd .ddtop {position:absolute;top:-24px;right:0px;width:569px;height:24px;background-position: 0 -920px}
+.n-body .bleft .ncontent dl dd .ddtopr {position:absolute;width:23px;height:27px;background-position:2px -863px;right:-1px;top:-1px}
+.n-body .bleft .ncontent dl dd .dlh .ddtopr{background-position: -117px -864px}
+.n-body .bleft .ncontent dl dd h2 {width:500px;height:50px;margin: 0 auto}
+.n-body .bleft .ncontent dl dd .ddcontent {width:500px;margin:0 auto}
+.n-body .bleft .ncontent dl dd .ddbuttom {width:500px;height:30px;margin:0 auto}
+.bleft .ncontetn dl dd .ddbuttom span {float:left;display: block;text-align: left}
+
+.n-body .bright {width:223px;display:block}
+.n-body .bright .prLove {background-position: -663px -963px;width: 223px}
+.n-body .bright .prLove .pbg {background-position: -122px -131px;margin:10px 20px 0;color:#fff;height:27px;display: block;line-height:21px;padding-left: 25px;font-size: 14px}
+.n-body .bright .prLove .blacka {display: block;height: 30px;width: 223px;text-align: center;font-size: 12px;line-height: 30px;background-color: #fff}
+.n-body .bright .prfriend {margin-top:20px}
+html,body {
+scrollbar-face-color:#CCC; /*滚动条3D表面（ThreedFace）的颜色*/ 
+scrollbar-highlight-color:#fff; /*滚动条3D界面的亮边（ThreedHighlight）颜色*/ 
+scrollbar-shadow-color:#eeeeee; /*滚动条3D界面的暗边（ThreedShadow）颜色*/ 
+scrollbar-3dlight-color:#eeeeee; /*滚动条亮边框颜色*/ 
+scrollbar-arrow-color:#000; /*滚动条方向箭头的颜色 */ 
+scrollbar-track-color:#fff; /*滚动条的拖动区域(TrackBar)颜色*/
+scrollbar-darkshadow-color:#fff; /*滚动条暗边框（ThreedDarkShadow）颜色*/ 
+}
+
+/*---滚动条默认显示样式--*/  
+::-webkit-scrollbar-thumb{   
+    background-color:#ccc;   
+    height:50px;   
+    outline-offset:-2px;   
+    outline:2px solid #fff;   
+    -webkit-border-radius:4px;   
+    border: 2px solid #fff;   
+} 
+  
+/*---鼠标点击滚动条显示样式--*/  
+::-webkit-scrollbar-thumb:hover{   
+    background-color:#575757;   
+    height:50px;   
+    -webkit-border-radius:4px;   
+}
+  
+/*---滚动条大小--*/  
+::-webkit-scrollbar{   
+    width:8px;   
+    height:8px;   
+}   
+  
+/*---滚动框背景样式--*/  
+::-webkit-scrollbar-track-piece{   
+    background-color:#fff;   
+    -webkit-border-radius:0;   
+}   
