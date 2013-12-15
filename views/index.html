@@ -168,11 +168,11 @@
   </div>
 </div>
 <script type="text/javascript">
-  $(".ddtop").hover(function(){
-    $(this).attr("class", "pbg dlh ddtop");
+  $("dd").mouseover(function(){
+    $(this).find(".ddtop").attr("class", "pbg dlh ddtop");
   })
-  $(".ddtop").mouseout(function(){
-    $(this).attr("class", "pbg ddtop");
+  $("dd").mouseout(function(){
+    $(this).find(".ddtop").attr("class", "pbg ddtop");
   })
   $(".blacka").hover(function(){
     $(this).animate({"opacity":1}, 250);
