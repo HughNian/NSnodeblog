@@ -99,7 +99,7 @@ $(".avatar").live('click', function(){
 $(".chatbox").click(function(){
   var _this = $(this);
   var from_user = $("#avatar").attr("alt");
-  $.get('/getchats?from_user='+from_user+'timetag'+Date.parse(new Date()), function(ret){//读取聊天信息
+  $.get('/getchats?from_user='+from_user+'&timetag='+Date.parse(new Date()), function(ret){//读取聊天信息
     var old_chats = {};
     if(ret.result == 1){
       old_chats = ret.data;
@@ -114,6 +114,7 @@ $(".chatbox").click(function(){
 
     _this.hide();
     var p = [];
+    console.log(old_chats);
     if(user_count > 1){
       var userlist = [];
       var username = [];
@@ -175,7 +176,7 @@ $(".chatbox").click(function(){
       $(".sendbox").css("display","block");
       $(".userlist").css({'height':'0'}).show().animate({'height':'440px'});
       $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
-    } else if (user_count == 1 || $(".chatbox").html().match("您有")){
+    } else if (user_count == 1 || $(".chatbox").html().match("您有")){      
       for(var key in user_msg){
         if(array_key_exists(key, old_chats)){
           //var message = old_chats[key].slice(-6);
@@ -261,7 +262,6 @@ function sendmsg()
 {
   var msg = $.trim($(".area").val());
   msg = replace_em(msg);
-  console.log(msg);
   if(msg == ""){
       colorKit();
       return false;
@@ -279,7 +279,7 @@ function sendmsg()
 function showUserMsg(name)
 {
   var from_user = $("#avatar").attr("alt");
-  $.get('/getchats?from_user='+from_user+'&timetag'+Date.parse(new Date()), function(ret){//读取聊天信息，timetag参数用于ie获取最新消息记录而不取缓存
+  $.get('/getchats?from_user='+from_user+'&timetag='+Date.parse(new Date()), function(ret){//读取聊天信息，timetag参数用于ie获取最新消息记录而不取缓存
     var old_chats = {};
     if(ret.result == 1){
       var old_chats = ret.data;
