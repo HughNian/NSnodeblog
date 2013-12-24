@@ -80,8 +80,10 @@ $(".avatar").live('click', function(){
   if(!in_names(name, chat_users)){
     chat_users.push(name);
   }
+
   showUserMsg(name);
   $(".sendbox").css({'height':'0'}).show().animate({'height':'440px'});
+  console.log(chat_users);
   if(chat_users.length > 1){
     for(var key in chat_users){
        userlist.push("<span class='username' data-name="+chat_users[key]+">"+chat_users[key]+"<label class='deluser'>X</label></span>");
@@ -247,6 +249,7 @@ $(".gb").click(function(){
     delete user_msg[$(this).attr('data-name')];
     del_name($(this).attr('data-name'), chat_users);
   });
+  $(".chatname").html("");
   msg_count_old = 0;
 });
 
