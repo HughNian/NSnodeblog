@@ -229,6 +229,11 @@ span.emotion:hover{background-position:2px -28px}
 .n-body .bright .prLove .pbg {background-position: -122px -131px;margin:10px 20px 0;color:#fff;height:27px;display: block;line-height:21px;padding-left: 25px;font-size: 14px}
 .n-body .bright .prLove .blacka {display: block;height: 30px;width: 223px;text-align: center;font-size: 12px;line-height: 30px;background-color: #fff}
 .n-body .bright .prfriend {margin-top:20px}
+
+.foot {margin-top: 10px; text-align:center;font-size: 14px; font-family: "微软雅黑"}
+.foot span {margin-left:10px}
+.foot a {color:#b5793e}
+
 html,body {
 scrollbar-face-color:#CCC; /*滚动条3D表面（ThreedFace）的颜色*/ 
 scrollbar-highlight-color:#fff; /*滚动条3D界面的亮边（ThreedHighlight）颜色*/ 

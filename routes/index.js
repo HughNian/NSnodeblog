@@ -7,6 +7,7 @@
 var site = require('../controllers/site');
 var sign = require('../controllers/sign');
 var chats = require('../controllers/chats');
+var article = require('../controllers/article');
 
 module.exports = function(app) {
     //首页
@@ -24,4 +25,8 @@ module.exports = function(app) {
     app.get('/login', sign.showLogin);
     app.post('/login', sign.login);
     app.get('/logout', sign.logout);
+
+    //显示，发布文章
+    app.get('/publish/word', article.showPublish);
+    app.post('/publish', article.publish);
 };

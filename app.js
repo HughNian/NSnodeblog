@@ -11,6 +11,8 @@
  */
 var http = require('http');
 var express = require('express');
+var partials = require('express-partials');
+var engines = require('consolidate');
 var routes = require('./routes');
 var fs = require('fs');
 var path = require('path');
@@ -19,10 +21,18 @@ var routes = require('./routes');
 //var MongoSorge = require('connect-mongo')(express);
 
 var app = express();
+app.use(partials());
 app.set('port', config.port || 3000);
+//模版加载配置
 app.set('view engine', 'html');
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');
+
+/*
+app.set('views', __dirname + '/views');
+app.engine('html', engines.mustache);
+app.set('view engine', 'html');
+*/
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: config.upload_dir }));//上传文件目录
