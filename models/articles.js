@@ -8,6 +8,9 @@ var ObjectId = Schema.ObjectId;
 
 var ArticlesSchema = new Schema({
     title: {type: String},
+    pic_url: {type:String},
+    music_url: {type:String},
+    video_url: {type:String},
     content: {type: String},
     author_id: {type: ObjectId},
     top:{type:Boolean, default: false},

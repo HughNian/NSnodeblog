@@ -27,6 +27,10 @@ module.exports = function(app) {
     app.get('/logout', sign.logout);
 
     //显示，发布文章
-    app.get('/publish/word', article.showPublish);
+    app.get('/publish/index/word', article.index);
+    app.get('/publish/index/pic', article.index);
+    app.get('/publish/index/music', article.index);
+    app.get('/publish/index/video', article.index);
+    app.get('/publish/music', article.music);
     app.post('/publish', article.publish);
 };

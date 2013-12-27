@@ -22,6 +22,9 @@ exports.config = {
 
   //列表显示文章个数
   articles_count: 20,
+  
+  //虾米music api
+  xiami:"www.xiami.com",
 
   //友情连接
   site_links: [

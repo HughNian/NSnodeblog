@@ -185,6 +185,7 @@ span.emotion:hover{background-position:2px -28px}
 
 .n-body {width:930px;margin: 35px auto}
 .clearfix {zoom:1}
+.disnone {display:none}
 .fl {float: left; display: block}
 .fr {float: right; display: block}
 .facefriend {background-position:-410px -115px}
@@ -230,9 +231,24 @@ span.emotion:hover{background-position:2px -28px}
 .n-body .bright .prLove .blacka {display: block;height: 30px;width: 223px;text-align: center;font-size: 12px;line-height: 30px;background-color: #fff}
 .n-body .bright .prfriend {margin-top:20px}
 
+/** foot 页面**/
 .foot {margin-top: 10px; text-align:center;font-size: 14px; font-family: "微软雅黑"}
 .foot span {margin-left:10px}
 .foot a {color:#b5793e}
+
+/** 发布内容页面 **/
+.sbody {width:900px;margin: 50px auto;min-height: 350px}
+.sbody .setbody {width:800px; margin: 0 auto;}
+.sbody .setbody table {width:100%;border-collapse: collapse;border-style: none}
+.sbody .setbody table td {border: 1px solid #EBEBEB;height:40px; padding:10px 20px;line-height: 40px;font-size: 16px}
+.sbody .setbody table td label {float:left;line-height: 40px;margin-left: 15px; font-size: 16px; color:#0F9E61}
+.sbody .setbody table td .tabbg {background-color: #F7F7F7 !important; text-align: center;vertical-align: top;}
+.sbody .setbody table td .tinput {width:330px;height:38px;border: 1px solid #EBEBEB;line-height: 28px; text-indent: 10px}
+.sbody .setbody table td .textinput {width:550px;height:150px;color:#555;overflow: auto;resize:none;text-indent: 0}
+.sbody .setbody table td .combutton {width:88px;height:30px;color:#fff;cursor:pointer;font-size:14px;background-position: -297px -789px;border:none}
+.sbody .setbody table td .combutton:hover {background-position: -395px -789px}
+.sbody .setbody table td .qxbutton {width:88px;height:30px;color:#fff;cursor:pointer;font-size:14px;background-position: -297px -869px;border:none}
+.sbody .setbody table td .qxbutton:hover {background-position: -395px -869px}
 
 html,body {
 scrollbar-face-color:#CCC; /*滚动条3D表面（ThreedFace）的颜色*/ 

@@ -1,5 +1,70 @@
-<%- extends header.html %>
-    <div class="n-body clearfix">
-        
+<%- include header.html %>
+    <div class="sbody clearfix">
+    	<div class="setbody clearfix">
+        <from name="article" action="/publish" method="post">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                	<tr><td colspan="3"><b>发布内容</b></td></tr>
+                	<tr>
+                        <td width="20%" class="tabbg">发布类型</td>
+                        <td width="80%">
+                            <label><input class="rinput" type="radio" name="type" value="word" <% if (type == 'word') { %>checked="checked"<% } %>>文字</label>
+                            <label><input class="rinput" type="radio" name="type" value="pic" <% if (type == 'pic') { %>checked="checked"<% } %>>图片</label>
+                            <label><input class="rinput" type="radio" name="type" value="music" <% if (type == 'music') { %>checked="checked"<% } %>>音乐</label>
+                            <label><input class="rinput" type="radio" name="type" value="video" <% if (type == 'video') { %>checked="checked"<% } %>>视频</label>
+                        </td>
+                	</tr>
+                	<tr>
+                		<td width="20%" class="tabbg">标题</td>
+                		<td width="80%"><input type="text" name="title" class="tinput" autocomplete="off"></td>
+                	</tr>
+                	<tr <% if (type == "pic" || type == "video") {%>class="sptr1"<% } else { %>class="sptr1 disnone"<% } %>>
+                		<td width="20%">图片/视频链接</td>
+                		<td width="80%"><input type="text" class="tinput" autocomplete="off"></td>
+                	</tr>
+                	<tr <% if (type == "music" ) {%>class="sptr2"<% } else { %>class="sptr2 disnone"<% } %>>
+                		<td width="20%">音乐搜索</td>
+                		<td width="80%"><input type="text" name="music" id="music" class="tinput" autocomplete="off"></td>
+                	</tr>
+                	<tr>
+                		<td width="20%" class="tabbg">正文内容</td>
+                		<td width="80%">
+                		    <textarea class="textinput"></textarea>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td></td>
+                		<td>
+                		    <a href="javascript:;"><button type="submit" class="pbg combutton">完成</button></a>
+                		    <a href="/home"><button type="button" class="pbg qxbutton">取消</button></a>
+                		</td>
+                	</tr>
+                </tbody>
+            </table>
+        </from>
+        </div>
     </div>
-<%- extends footer.html %>
+<%- include footer.html %>
+<script type="text/javascript">
+	$(".rinput").click(function(){
+		var type = $(this).val();
+		if(type == "word"){
+		    $(".sptr1").hide();
+		    $(".sptr2").hide();
+		}
+		if(type == "pic" || type == "video"){
+		    $(".sptr1").show();
+		    $(".sptr2").hide();
+		}
+		if(type == "music"){
+		    $(".sptr2").show();
+		    $(".sptr1").hide();
+		}
+	});
+    $("#music").keyup(function(){
+        var musicName = $(this).val();
+    	$.get('/publish/music?musicName='+musicName+'&page=1', function(data){
+    		console.log(data);
+    	});
+    })
+</script>
