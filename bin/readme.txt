@@ -1,0 +1,1 @@
+localhost/xiami.php?key=key&page=1
