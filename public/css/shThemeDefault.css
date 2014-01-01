@@ -254,8 +254,10 @@ span.emotion:hover{background-position:2px -28px}
 .musicbox ul {list-style: none;float: left;width:100%;margin:0; padding:0;}
 .musicbox ul li {width:100%;height:30px;line-height:30px;border-bottom:1px solid #E3E3E3;padding:0 15px;color:#727272;cursor:pointer;}
 .musicbox ul li:hover{background: #F5F5F5}
-.musicbox ul li .pn {width:80px;height:25px;color:#fff;cursor:pointer;font-size:12px;background-position: -297px -869px;border:none;margin-left: 5px}
-.musicbox ul li .pn {background-position: -395px -869px}
+.musicbox ul li .next {width:80px;height:25px;color:#fff;cursor:pointer;font-size:12px;background-position: -297px -869px;border:none;margin-left: 5px}
+.musicbox ul li .next:hover {background-position: -395px -869px}
+.musicbox ul li .prev {width:80px;height:25px;color:#fff;cursor:pointer;font-size:12px;background-position: -297px -869px;border:none;margin-left: 5px}
+.musicbox ul li .prev:hover {background-position: -395px -869px}
 .musicbox ul li .font {font-size: 12px}
 
 .musicplay {width:360px;height:50px;background:#ccc;border-radius:5px}

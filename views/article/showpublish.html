@@ -48,6 +48,7 @@
     </div>
 <%- include footer.html %>
 <script type="text/javascript">
+    page = 1;
 	$(".rinput").click(function(){
 		var type = $(this).val();
 		if(type == "word"){
@@ -69,7 +70,7 @@
             loading = $("#loading");
         loading.css({"font-size":"12px"});
         loading.html("<img src='/images/small-round-loading.gif'>正在搜索音乐</span>");
-    	$.get('/publish/music?musicName='+musicName+'&page=1', function(data){
+    	$.get('/publish/music?musicName='+musicName+'&page='+page, function(data){
             loading.html("");           
     		var ret = JSON.parse(data);
             if(ret.total == null){
@@ -86,7 +87,7 @@
                     li += "<li data="+JSON.stringify(musics[i])+" class='thismusic'><span>"+musicname+"</span><span>-</span><span>"+artistname+"</span></i>"                    
                 }
                 if(total > 8){
-                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="pbg pn fr">下一页</button></li>';
+                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="next pbg fr">下一页</button></li>';
                 } else {
                     li += '<li><span class="font">共搜到'+total+'首歌</span></li>';
                 }
@@ -104,9 +105,12 @@
         var musicplay = '<div class="musicplay"><img src="'+img+'"><embed src="http://img.xiami.com/res/player/widget/singlePlayer.swf?dataUrl=http://www.xiami.com/widget/xml-single/uid/0/sid/'+musicid+'" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"><input type="hidden" name="musicid" value='+musicid+'><input type="hidden" name="musicimg" value="'+img+'"><span class="closemusic">X</span></div>';
         $(".musictd").append(musicplay);
     });
-    $('.closemusic').live('click', function(){
+    $(".closemusic").live('click', function(){
         $(".musicplay").remove();
         var musicsearch = '<input type="text" name="music" id="music" class="tinput" style="width:450px" autocomplete="off"><span id="loading"></span>';
         $(".musictd").append(musicsearch);
+    });
+    $(".next").live('click', function(){
+        
     });
 </script>
