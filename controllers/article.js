@@ -24,7 +24,7 @@ exports.index = function(req, res, next) {
 
 exports.music = function(req, res, next) {
 	var oUrl = url.parse(req.url, true);
-    var musicName = oUrl.query.musicName;
+    var musicName = encodeURIComponent(oUrl.query.musicName);
     var page = oUrl.query.page;
     if(musicName != ""){
 		/*
@@ -41,7 +41,6 @@ exports.music = function(req, res, next) {
 		}).on('error', function(e) {
 		      console.log("Got error: ", e);
 		});*/
-        
 		var opts = {
 		    host: 'localhost',
 		    path: '/xiami.php?key=' + musicName + '&page=' + page,
@@ -57,7 +56,6 @@ exports.music = function(req, res, next) {
 		    })
 
 		    response.on('end', function() {
-		        console.log(data);
 		        res.send(data);
 		    })
 		})
@@ -66,6 +64,9 @@ exports.music = function(req, res, next) {
 		  console.log('problem with request: ' + e.message);
 		});
 		request.end();
+    } else {
+    	var ret = '{"total":null,"results":[],"key":""}';
+    	res.send(ret);
     }
 }
 

@@ -24,7 +24,9 @@
                 	</tr>
                 	<tr <% if (type == "music" ) {%>class="sptr2"<% } else { %>class="sptr2 disnone"<% } %>>
                 		<td width="20%">音乐搜索</td>
-                		<td width="80%"><input type="text" name="music" id="music" class="tinput" autocomplete="off"></td>
+                		<td width="80%" class="musictd">
+                            <input type="text" name="music" id="music" class="tinput" style="width:450px" autocomplete="off"><span id="loading"></span>
+                        </td>
                 	</tr>
                 	<tr>
                 		<td width="20%" class="tabbg">正文内容</td>
@@ -61,10 +63,50 @@
 		    $(".sptr1").hide();
 		}
 	});
-    $("#music").keyup(function(){
-        var musicName = $(this).val();
+    $("#music").live('keyup', function(){
+        var _this = $(this),
+            musicName = _this.val(),
+            loading = $("#loading");
+        loading.css({"font-size":"12px"});
+        loading.html("<img src='/images/small-round-loading.gif'>正在搜索音乐</span>");
     	$.get('/publish/music?musicName='+musicName+'&page=1', function(data){
-    		console.log(data);
+            loading.html("");           
+    		var ret = JSON.parse(data);
+            if(ret.total == null){
+                $(".musicbox").remove();
+            } else {
+                var musics = ret.results;
+                var total = ret.total;
+                var li = "";
+                for(var i in musics){
+                    var musicname = decodeURIComponent(musics[i].song_name),
+                        musicname = musicName.replace(/\+/gi, " ");
+                    var artistname = decodeURIComponent(musics[i].artist_name),
+                        artistname = artistname.replace(/\+/gi, " ");
+                    li += "<li data="+JSON.stringify(musics[i])+" class='thismusic'><span>"+musicname+"</span><span>-</span><span>"+artistname+"</span></i>"                    
+                }
+                if(total > 8){
+                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="pbg pn fr">下一页</button></li>';
+                } else {
+                    li += '<li><span class="font">共搜到'+total+'首歌</span></li>';
+                }
+                loading.append('<div class="musicbox"><ul>'+li+'</ul></div>');
+            }
     	});
     })
+    $(".thismusic").live('click', function(){
+        var data = JSON.parse($(this).attr('data'));
+        $("#music").remove();
+        $("#loading").remove();
+        $(".musicbox").remove();
+        var img = data.album_logo;
+        var musicid = data.song_id;
+        var musicplay = '<div class="musicplay"><img src="'+img+'"><embed src="http://img.xiami.com/res/player/widget/singlePlayer.swf?dataUrl=http://www.xiami.com/widget/xml-single/uid/0/sid/'+musicid+'" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"><input type="hidden" name="musicid" value='+musicid+'><input type="hidden" name="musicimg" value="'+img+'"><span class="closemusic">X</span></div>';
+        $(".musictd").append(musicplay);
+    });
+    $('.closemusic').live('click', function(){
+        $(".musicplay").remove();
+        var musicsearch = '<input type="text" name="music" id="music" class="tinput" style="width:450px" autocomplete="off"><span id="loading"></span>';
+        $(".musictd").append(musicsearch);
+    });
 </script>
