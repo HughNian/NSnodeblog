@@ -32,5 +32,8 @@ module.exports = function(app) {
     app.get('/publish/index/music', article.index);
     app.get('/publish/index/video', article.index);
     app.get('/publish/music', article.music);
-    app.post('/publish', article.publish);
+    app.post('/publish/index/word', article.publish);
+    app.post('/publish/index/pic', article.publish);
+    app.post('/publish/index/music', article.publish);
+    app.post('/publish/index/video', article.publish);
 };

@@ -1,10 +1,10 @@
 <%- include header.html %>
     <div class="sbody clearfix">
     	<div class="setbody clearfix">
-        <from name="article" action="/publish" method="post">
+        <form name="article" action="" method="post">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
-                	<tr><td colspan="3"><b>发布内容</b></td></tr>
+                	<tr><td><b>发布内容</b></td><td><% if(locals.error) { %><div class="errormsg"><%= error%></div><% } %></td></tr>
                 	<tr>
                         <td width="20%" class="tabbg">发布类型</td>
                         <td width="80%">
@@ -20,7 +20,7 @@
                 	</tr>
                 	<tr <% if (type == "pic" || type == "video") {%>class="sptr1"<% } else { %>class="sptr1 disnone"<% } %>>
                 		<td width="20%">图片/视频链接</td>
-                		<td width="80%"><input type="text" class="tinput" autocomplete="off"></td>
+                		<td width="80%"><input type="text" class="tinput" id="pic_video" autocomplete="off" <% if(type == "pic") { %>name="pic_url"<% } else if( type == "video"){ %>name="video_url"<% } %>></td>
                 	</tr>
                 	<tr <% if (type == "music" ) {%>class="sptr2"<% } else { %>class="sptr2 disnone"<% } %>>
                 		<td width="20%">音乐搜索</td>
@@ -31,24 +31,24 @@
                 	<tr>
                 		<td width="20%" class="tabbg">正文内容</td>
                 		<td width="80%">
-                		    <textarea class="textinput"></textarea>
+                		    <textarea class="textinput" name="content"></textarea>
                 		</td>
                 	</tr>
                 	<tr>
                 		<td></td>
                 		<td>
-                		    <a href="javascript:;"><button type="submit" class="pbg combutton">完成</button></a>
+                		    <button type="submit" class="pbg combutton">完成</button>
                 		    <a href="/home"><button type="button" class="pbg qxbutton">取消</button></a>
                 		</td>
                 	</tr>
                 </tbody>
             </table>
-        </from>
+        </form>
         </div>
     </div>
 <%- include footer.html %>
 <script type="text/javascript">
-    page = 1;
+    page = 1;//全局页数变量。默认值1
 	$(".rinput").click(function(){
 		var type = $(this).val();
 		if(type == "word"){
@@ -57,6 +57,7 @@
 		}
 		if(type == "pic" || type == "video"){
 		    $(".sptr1").show();
+            $("#pic_video").attr("name", type+'_url');
 		    $(".sptr2").hide();
 		}
 		if(type == "music"){
@@ -80,9 +81,9 @@
                 var total = ret.total;
                 var li = "";
                 for(var i in musics){
-                    var musicname = decodeURIComponent(musics[i].song_name),
-                        musicname = musicName.replace(/\+/gi, " ");
-                    var artistname = decodeURIComponent(musics[i].artist_name),
+                    var musicname = decodeURIComponent(musics[i].song_name);
+                        musicname = musicname.replace(/\+/gi, " ");
+                    var artistname = decodeURIComponent(musics[i].artist_name);
                         artistname = artistname.replace(/\+/gi, " ");
                     li += "<li data="+JSON.stringify(musics[i])+" class='thismusic'><span>"+musicname+"</span><span>-</span><span>"+artistname+"</span></i>"                    
                 }
@@ -111,6 +112,73 @@
         $(".musictd").append(musicsearch);
     });
     $(".next").live('click', function(){
-        
+        page += 1;
+        var musicName = $("#music").val(),
+            loading = $("#loading");
+            loading.css({"font-size":"12px"});
+            loading.html("<img src='/images/small-round-loading.gif'>正在搜索音乐</span>");
+        $.get('/publish/music?musicName='+musicName+'&page='+page, function(data){
+            loading.html("");           
+            var ret = JSON.parse(data);
+            if(ret.total == null){
+                $(".musicbox").remove();
+            } else {
+                $(".musicbox").remove();
+                var musics = ret.results;
+                var total = ret.total;
+                var totalpage = Math.ceil(total/8);
+                var li = "";
+                for(var i in musics){
+                    var musicname = decodeURIComponent(musics[i].song_name),
+                        musicname = musicname.replace(/\+/gi, " ");
+                    var artistname = decodeURIComponent(musics[i].artist_name),
+                        artistname = artistname.replace(/\+/gi, " ");
+                    li += "<li data="+JSON.stringify(musics[i])+" class='thismusic'><span>"+musicname+"</span><span>-</span><span>"+artistname+"</span></i>"                    
+                }
+                if(total > 8 && page > 1 && page < totalpage){
+                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="next pbg fr">下一页</button><button type="button" class="prev pbg fr">上一页</button></li>';
+                } else if (page >= totalpage) {
+                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="prev pbg fr">上一页</button></li>';
+                } else {
+                    li += '<li><span class="font">共搜到'+total+'首歌</span></li>';
+                }
+                loading.append('<div class="musicbox"><ul>'+li+'</ul></div>');
+            }
+        });
+    });
+    $(".prev").live('click', function(){
+        page -= 1;
+        var musicName = $("#music").val(),
+            loading = $("#loading");
+            loading.css({"font-size":"12px"});
+            loading.html("<img src='/images/small-round-loading.gif'>正在搜索音乐</span>");
+        $.get('/publish/music?musicName='+musicName+'&page='+page, function(data){
+            loading.html("");           
+            var ret = JSON.parse(data);
+            if(ret.total == null){
+                $(".musicbox").remove();
+            } else {
+                $(".musicbox").remove();
+                var musics = ret.results;
+                var total = ret.total;
+                var totalpage = Math.ceil(total/8);
+                var li = "";
+                for(var i in musics){
+                    var musicname = decodeURIComponent(musics[i].song_name),
+                        musicname = musicname.replace(/\+/gi, " ");
+                    var artistname = decodeURIComponent(musics[i].artist_name),
+                        artistname = artistname.replace(/\+/gi, " ");
+                    li += "<li data="+JSON.stringify(musics[i])+" class='thismusic'><span>"+musicname+"</span><span>-</span><span>"+artistname+"</span></i>"                    
+                }
+                if(total > 8 && page > 1 && page < totalpage){
+                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="next pbg fr">下一页</button><button type="button" class="prev pbg fr">上一页</button></li>';
+                } else if (page <= 1) {
+                    li += '<li><span class="font">共搜到'+total+'首歌</span><button type="button" class="next pbg fr">下一页</button></li>';
+                } else {
+                    li += '<li><span class="font">共搜到'+total+'首歌</span></li>';
+                }
+                loading.append('<div class="musicbox"><ul>'+li+'</ul></div>');
+            }
+        });
     });
 </script>

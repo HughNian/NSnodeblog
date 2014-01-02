@@ -23,10 +23,15 @@ exports.getArticlesById = function(id , callback){
  * 添加文章
  *
  */
-exports.newAndSave = function (title, content, authorId, callback) {
+exports.newAndSave = function (data, callback) {
     var articles = new Articles();
-    articles.title = title;
-    articles.content = content;
-    articles.author_id = authorId;
+    articles.title = data.title;
+    articles.content = data.content;
+    articles.author_id = data.author_id;
+    articles.author_name = data.author_name;
+    articles.pic_url = data.pic_url;
+    articles.video_url = data.video_url;
+    articles.music_id = data.music_id;
+    articles.music_logo = data.music_logo;
     articles.save(callback);
 };

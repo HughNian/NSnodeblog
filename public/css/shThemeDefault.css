@@ -237,7 +237,7 @@ span.emotion:hover{background-position:2px -28px}
 .foot a {color:#b5793e}
 
 /** 发布内容页面 **/
-.sbody {width:900px;margin: 50px auto;min-height: 350px}
+.sbody {width:900px;margin: 50px auto;min-height: 350px;position: relative}
 .sbody .setbody {width:800px; margin: 0 auto;}
 .sbody .setbody table {width:100%;border-collapse: collapse;border-style: none}
 .sbody .setbody table td {border: 1px solid #EBEBEB;height:40px; padding:10px 20px;line-height: 40px;font-size: 16px}
@@ -249,8 +249,9 @@ span.emotion:hover{background-position:2px -28px}
 .sbody .setbody table td .combutton:hover {background-position: -395px -789px}
 .sbody .setbody table td .qxbutton {width:88px;height:30px;color:#fff;cursor:pointer;font-size:14px;background-position: -297px -869px;border:none}
 .sbody .setbody table td .qxbutton:hover {background-position: -395px -869px}
+.sbody .setbody table td .errormsg {width:300px;height:40px;background:rgb(255, 211, 211);border-radius:5px;line-height: 40px;text-align: center}
 
-.musicbox {position:absolute;top:393px;left:500px;width:450px;height:280px;border:1px solid #CCCCCC;background:#FFFFFF;z-index:9999}
+.musicbox {position:absolute;top:250px;left:230px;width:450px;height:280px;border:1px solid #CCCCCC;background:#FFFFFF;z-index:9999}
 .musicbox ul {list-style: none;float: left;width:100%;margin:0; padding:0;}
 .musicbox ul li {width:100%;height:30px;line-height:30px;border-bottom:1px solid #E3E3E3;padding:0 15px;color:#727272;cursor:pointer;}
 .musicbox ul li:hover{background: #F5F5F5}

@@ -3,11 +3,12 @@
  *
  *
  */
-var config = require('../config').config;
-var url = require('url');
-var check = require('validator').check,
-    sanitize = require('validator').sanitize;
-var http = require('http');
+var config = require('../config').config,
+    url = require('url'),
+    check = require('validator').check,
+    sanitize = require('validator').sanitize,
+    http = require('http'),
+    Articles = require('../modules').Articles;
 
 //显示发布文章页面
 exports.index = function(req, res, next) {
@@ -72,5 +73,43 @@ exports.music = function(req, res, next) {
 
 //发布文章
 exports.publish = function(req, res, next) {
-	
+	var title = sanitize(req.body.title).trim(),
+	    content = sanitize(req.body.content).trim(),
+	    pic_url = sanitize(req.body.pic_url).trim(),
+	    video_url = sanitize(req.body.video_url).trim(),
+	    music_id = sanitize(req.body.musicid).trim(),
+	    music_logo = sanitize(req.body.musicimg).trim(),
+	    type = req.body.type;
+    /*
+	var backUrl = req.header('Referer'),//获取referer URL
+	    urls = backUrl.split('/'),
+	    type = urls.pop();
+	    backUrl = 'publish/index/'+type;
+	*/
+	if(!title || !content){
+		//res.redirect(backUrl);
+		res.render('article/showpublish', {
+			error:"请填写完整内容", 
+			type:type, 
+			title:config.name,
+	    	description: config.description}
+	    );
+		return;
+	}
+	var userinfo = req.session.user;
+	var data = {};
+		data.title = title;
+		data.content = content;
+		data.pic_url = pic_url;
+		data.video_url = video_url;
+		data.music_id = music_id;
+		data.music_logo = music_logo;
+		data.author_id = userinfo._id;
+		data.author_name = userinfo.name;
+	Articles.newAndSave(data, function(err){
+		if(err){
+	        return next(err);
+	    }
+	    res.redirect('/');
+	});
 }

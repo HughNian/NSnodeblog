@@ -9,10 +9,12 @@ var ObjectId = Schema.ObjectId;
 var ArticlesSchema = new Schema({
     title: {type: String},
     pic_url: {type:String},
-    music_url: {type:String},
+    music_logo:{type:String},
+    music_id: {type:Number},
     video_url: {type:String},
     content: {type: String},
     author_id: {type: ObjectId},
+    author_name: {type: String},
     top:{type:Boolean, default: false},
     reply_count: { type: Number, default: 0 },
     visit_count: { type: Number, default: 0 },
