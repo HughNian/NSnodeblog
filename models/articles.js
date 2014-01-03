@@ -18,6 +18,7 @@ var ArticlesSchema = new Schema({
     top:{type:Boolean, default: false},
     reply_count: { type: Number, default: 0 },
     visit_count: { type: Number, default: 0 },
+    like_count: {type: Number, default: 0},
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
     last_reply: { type: ObjectId },

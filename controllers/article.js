@@ -8,7 +8,8 @@ var config = require('../config').config,
     check = require('validator').check,
     sanitize = require('validator').sanitize,
     http = require('http'),
-    Articles = require('../modules').Articles;
+    Articles = require('../modules').Articles,
+    EventProxy = require('eventproxy');
 
 //显示发布文章页面
 exports.index = function(req, res, next) {
@@ -106,10 +107,13 @@ exports.publish = function(req, res, next) {
 		data.music_logo = music_logo;
 		data.author_id = userinfo._id;
 		data.author_name = userinfo.name;
-	Articles.newAndSave(data, function(err){
-		if(err){
-	        return next(err);
-	    }
-	    res.redirect('/');
+
+	proxy = EventProxy.create('article_save', function(){
+		res.redirect('/');
 	});
+	proxy.fail(next);
+	
+	Articles.newAndSave(data, proxy.done(function(){
+		proxy.emit("article_save");
+	}));
 }
