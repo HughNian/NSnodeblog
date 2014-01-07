@@ -108,8 +108,8 @@ exports.publish = function(req, res, next) {
 		data.author_id = userinfo._id;
 		data.author_name = userinfo.name;
 
-	proxy = EventProxy.create('article_save', function(){
-		res.redirect('/');
+	var proxy = EventProxy.create('article_save', function(){
+		res.redirect('/home');
 	});
 	proxy.fail(next);
 	

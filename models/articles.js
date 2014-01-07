@@ -23,7 +23,8 @@ var ArticlesSchema = new Schema({
     update_at: { type: Date, default: Date.now },
     last_reply: { type: ObjectId },
     last_reply_at: { type: Date, default: Date.now },
-    content_is_html: { type: Boolean }
+    content_is_html: { type: Boolean },
+    del_status: {type:Number, default:0}//删除状态，默认0没有删除，1删除
 });
 
 mongoose.model('Articles', ArticlesSchema);

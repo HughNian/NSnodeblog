@@ -9,7 +9,7 @@ var User = require('../modules').User;
 //register
 exports.showRegister = function(req, res) {
     if(req.session.user){
-        res.redirect('/');
+        res.redirect('/home');
     }
     res.render('sign/register');
 };
@@ -81,7 +81,7 @@ exports.register = function(req, res, next){
 	    	}
 	      User.getUserByName(name, function(err, user){	      	
 	      	gen_session(user, req, res);
-	      	res.redirect('/');
+	      	res.redirect('/home');
 	      });
 	    });
     });
@@ -90,7 +90,7 @@ exports.register = function(req, res, next){
 //login
 exports.showLogin = function(req, res){
     if(req.session.user){
-        res.redirect('/');
+        res.redirect('/home');
     }
 	req.session._loginReferer = req.headers.referer;
 	res.render('sign/login');
@@ -122,7 +122,7 @@ exports.login = function(req, res, next){
 		}
 
 		gen_session(user, req, res);
-		res.redirect('/');
+		res.redirect('/home');
 	});
 };
 
@@ -146,7 +146,7 @@ exports.logout = function(req, res, next){
     }); */
     req.session.destroy();
     res.clearCookie(config.auth_cookie_name, {path: '/'});
-    res.redirect(req.headers.referer || '/');
+    res.redirect('/' || req.headers.referer);
 };
 
 function md5(str)

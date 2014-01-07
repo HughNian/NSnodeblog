@@ -11,6 +11,8 @@ mongoose.connect(config.db, function(err){
 // models
 require('./articles');
 require('./user');
+require('./friends');
 
 exports.Articles = mongoose.model('Articles');
 exports.User = mongoose.model('User');
+exports.Friends = mongoose.model('Friends');

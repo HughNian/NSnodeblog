@@ -15,11 +15,13 @@
     </div>
 
     <div class="ncontent clearfix">
+      <% if(articles){ %>
+      <% articles.forEach(function(articles) { %>
       <dl class="clearfix">
         <dt>
           <img src="http://www.gravatar.com/avatar/8eedfec3508297e66263016e87266809?s=200" width="80" height="80">
           <div class="addfriend">
-            <a href="/friends/add/52ad3d2c27e1bb9d47000002" title="加好友" class="pbg facefriend"></a>
+            <a href="javascript:;" data-user="<%= articles.author_id%>" title="加好友" class="facefriend pbg"></a>
           </div>
         </dt>
         <dd>
@@ -27,133 +29,32 @@
             <div class="pbg ddtopr"></div>
           </div>
           <h2 class="clearfix">
-            <a href="/content/info/52ad440f401f756877000001" >hello</a><a href="/content/list/52ad3d2c27e1bb9d47000002" class="fr bluea">hughnian</a>
+            <a href="/content/info/52ad440f401f756877000001" ><%= articles.title%><%= articles.is_friend %></a><a href="/content/list/52ad3d2c27e1bb9d47000002" class="fr bluea"><%= articles.author_name%></a>
           </h2>
           <div class="ddcontent">
-            hello world
+            <% if(articles.music_id) { %>
+                 <img src="<%= articles.music_logo%>">
+                 <embed src="http://img.xiami.com/res/player/widget/singlePlayer.swf?dataUrl=http://www.xiami.com/widget/xml-single/uid/0/sid/<%= articles.music_id %>" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
+            <% } else { %>
+                <%= articles.content %>
+            <% } %>
           </div>
           <div class="ddbuttom">
             <span>
-              <font class="gray">2013-12-15</font>
-              <a href="/content/info/" class="gray">评论(0)</a>
-              <a href="/content/info/" class="gray">喜欢(0)</a>
-              <a href="/content/info" class="pbg like">喜欢</a>
+              <font class="gray"><%= articles.create_at %></font>
+              <a href="/content/info/" class="gray">评论(<%= articles.reply_count%>)</a>
+              <a href="/content/info/" class="gray">喜欢(<%= articles.like_count%>)</a>
+              <a href="/content/info" class="like pbg">喜欢</a>
             </span>
           </div>
         </dd>
       </dl>
-
-       <dl class="clearfix">
-        <dt>
-          <img src="http://www.gravatar.com/avatar/8eedfec3508297e66263016e87266809?s=200" width="80" height="80">
-          <div class="addfriend">
-            <a href="/friends/add/52ad3d2c27e1bb9d47000002" title="加好友" class="pbg facefriend"></a>
-          </div>
-        </dt>
-        <dd>
-          <div class="pbg ddtop">
-            <div class="pbg ddtopr"></div>
-          </div>
-          <h2 class="clearfix">
-            <a href="/content/info/52ad440f401f756877000001" >hello</a><a href="/content/list/52ad3d2c27e1bb9d47000002" class="fr bluea">hughnian</a>
-          </h2>
-          <div class="ddcontent">
-            hello world
-          </div>
-          <div class="ddbuttom">
-            <span>
-              <font class="gray">2013-12-15</font>
-              <a href="/content/info/" class="gray">评论(0)</a>
-              <a href="/content/info/" class="gray">喜欢(0)</a>
-              <a href="/content/info" class="pbg like">喜欢</a>
-            </span>
-          </div>
-        </dd>
-      </dl>
-
-       <dl class="clearfix">
-        <dt>
-          <img src="http://www.gravatar.com/avatar/8eedfec3508297e66263016e87266809?s=200" width="80" height="80">
-          <div class="addfriend">
-            <a href="/friends/add/52ad3d2c27e1bb9d47000002" title="加好友" class="pbg facefriend"></a>
-          </div>
-        </dt>
-        <dd>
-          <div class="pbg ddtop">
-            <div class="pbg ddtopr"></div>
-          </div>
-          <h2 class="clearfix">
-            <a href="/content/info/52ad440f401f756877000001" >hello</a><a href="/content/list/52ad3d2c27e1bb9d47000002" class="fr bluea">hughnian</a>
-          </h2>
-          <div class="ddcontent">
-            hello world
-          </div>
-          <div class="ddbuttom">
-            <span>
-              <font class="gray">2013-12-15</font>
-              <a href="/content/info/" class="gray">评论(0)</a>
-              <a href="/content/info/" class="gray">喜欢(0)</a>
-              <a href="/content/info" class="pbg like">喜欢</a>
-            </span>
-          </div>
-        </dd>
-      </dl>
-
-       <dl class="clearfix">
-        <dt>
-          <img src="http://www.gravatar.com/avatar/8eedfec3508297e66263016e87266809?s=200" width="80" height="80">
-          <div class="addfriend">
-            <a href="/friends/add/52ad3d2c27e1bb9d47000002" title="加好友" class="pbg facefriend"></a>
-          </div>
-        </dt>
-        <dd>
-          <div class="pbg ddtop">
-            <div class="pbg ddtopr"></div>
-          </div>
-          <h2 class="clearfix">
-            <a href="/content/info/52ad440f401f756877000001" >hello</a><a href="/content/list/52ad3d2c27e1bb9d47000002" class="fr bluea">hughnian</a>
-          </h2>
-          <div class="ddcontent">
-            hello world
-          </div>
-          <div class="ddbuttom">
-            <span>
-              <font class="gray">2013-12-15</font>
-              <a href="/content/info/" class="gray">评论(0)</a>
-              <a href="/content/info/" class="gray">喜欢(0)</a>
-              <a href="/content/info" class="pbg like">喜欢</a>
-            </span>
-          </div>
-        </dd>
-      </dl>
-
-       <dl class="clearfix">
-        <dt>
-          <img src="http://www.gravatar.com/avatar/8eedfec3508297e66263016e87266809?s=200" width="80" height="80">
-          <div class="addfriend">
-            <a href="/friends/add/52ad3d2c27e1bb9d47000002" title="加好友" class="pbg facefriend"></a>
-          </div>
-        </dt>
-        <dd>
-          <div class="pbg ddtop">
-            <div class="pbg ddtopr"></div>
-          </div>
-          <h2 class="clearfix">
-            <a href="/content/info/52ad440f401f756877000001" >hello</a><a href="/content/list/52ad3d2c27e1bb9d47000002" class="fr bluea">hughnian</a>
-          </h2>
-          <div class="ddcontent">
-            hello world
-          </div>
-          <div class="ddbuttom">
-            <span>
-              <font class="gray">2013-12-15</font>
-              <a href="/content/info/" class="gray">评论(0)</a>
-              <a href="/content/info/" class="gray">喜欢(0)</a>
-              <a href="/content/info" class="pbg like">喜欢</a>
-            </span>
-          </div>
-        </dd>
-      </dl>
+      <% }) %>
+      <% } else { %>
+        <dl class="clearfix">
+          <dt>没有内容</dt>
+        </dl>
+      <% } %>
     </div>
   </div>
 
@@ -180,5 +81,13 @@
   });
   $(".blacka").mouseout(function(){
     $(this).animate({"opacity":0.4}, 250);
+  });
+  
+  //加好友
+  $(".facefriend").click(function(){
+    var add_user = $(this).attr('data-user');
+    $.get('/addfriend?add_user='+add_user, function(ret){
+      console.log(ret);
+    });
   });
 </script>

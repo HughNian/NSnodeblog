@@ -11,16 +11,20 @@ var article = require('../controllers/article');
 
 module.exports = function(app) {
     //首页
-    app.get('/', site.index);
+    app.get('/', sign.showLogin);
+    //用户首页
+    app.get('/home', site.index);
     //ajax获取好友
     app.get('/friends', site.friends);
+    //ajaxt添加好友
+    app.get('/addfriend', site.addfriend);
     //ajax保存聊天记录
     app.post('/setchats', chats.setchats);
     //ajax获取聊天纪录
     app.get('/getchats', chats.getchats);
     
     //用户册，登录，退出
-    app.get('/register', sign.showRegister);
+    //app.get('/register', sign.showRegister);
     app.post('/register', sign.register);
     app.get('/login', sign.showLogin);
     app.post('/login', sign.login);

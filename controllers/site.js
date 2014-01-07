@@ -3,14 +3,18 @@
  *
  *
  */
-var config = require('../config').config;
-var url = require('url');
-var User = require('../modules').User;
-var Chats = require('../modules').Chats;
+var config = require('../config').config,
+    url = require('url'),
+    User = require('../modules').User,
+    Chats = require('../modules').Chats,
+    Friends = require('../modules').Friends,
+    Articles = require('../modules').Articles,
+    EventProxy = require('eventproxy');
 
 exports.index = function (req, res, next) {
 	  //var oUrl = url.parse(req.url, true)
     //var is_login = oUrl.query.is_login ?  oUrl.query.is_login : 0;
+    if(!req.session.user) res.redirect('/');//如果没有登录返回登录界面首页
     var cookies = {};
     req.headers.cookie && req.headers.cookie.split(';').forEach(function( cookie ) {
        var parts = cookie.split('=');
@@ -79,16 +83,40 @@ exports.index = function (req, res, next) {
           });
         });
         User.getUsersNoDel(true, false, userinfo.name, function(err, friends){
-            if(err){
-                return next(err);
+          if(err){
+              return next(err);
+          }
+          
+          Articles.getArticles(function(err, articles){
+            if(err) return next(err);
+            var proxy = EventProxy.create('is_friend', function(articles){
+                console.log(articles);
+                res.render('index', {
+                  title: config.name,
+                  description: config.description,
+                  is_login: is_login,
+                  userinfo: userinfo,
+                  articles: articles,
+                  haoyou: friends
+                });
+            }).fail(next);
+            for(var i in articles){
+                Friends.hasFriend(userinfo._id, articles[i].author_id, proxy.done( function (ret) {
+                  if(ret) articles[i].is_friend = 1;
+                  proxy.emit('is_friend', articles);
+                }));
             }
+            /*
+            console.log(articles);
             res.render('index',{
                 title: config.name,
                 description: config.description,
-                is_login:is_login,
+                is_login: is_login,
                 userinfo: userinfo,
+                articles: articles,
                 haoyou: friends
-            });
+            });*/
+          });
         });
     }
 }
@@ -98,8 +126,7 @@ exports.index = function (req, res, next) {
  *
  *
  */
-exports.friends = function(req, res, next)
-{
+exports.friends = function(req, res, next) {
     var oUrl = url.parse(req.url, true);
     var name = oUrl.query.name;
     User.getUsersNoDel(true, false, name, function(err, users){
@@ -108,6 +135,34 @@ exports.friends = function(req, res, next)
          }
         res.send(users);
     });
+}
+
+/**
+ * 加为好友
+ *
+ */
+exports.addfriend = function(req, res, next) {
+  var userinfo = req.session.user;
+  var oUrl = url.parse(req.url, true),
+      addUserId = oUrl.query.add_user,
+      userId = userinfo._id;
+  Friends.hasFriend(userId, addUserId, function (ret) {
+    var redirect = {};
+    if(ret) result = "{ret:false, msg:'已经是好友了'}";
+    res.send(result);
+    return;
+    var proxy = EventProxy.create('get_friend_name', 'add_friend', function () {
+      result = "{ret:true, msg:'添加成功'}";
+      res.send(result);
+    }).fail(next);
+    User.getUserById(addUserId, proxy.done(function (friend) {
+      var friendNmae = friend.name;
+      proxy.emit('get_friend_name');
+        Friends.addFriend(userId, addUserId, friendNmae, proxy.done(function () {
+          proxy.emit('add_friend');
+        }));
+    }));
+  });
 }
 
 //private

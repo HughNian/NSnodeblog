@@ -221,7 +221,7 @@ span.emotion:hover{background-position:2px -28px}
 .n-body .bleft .ncontent dl dd .ddtopr {position:absolute;width:23px;height:27px;background-position:2px -863px;right:-1px;top:-1px}
 .n-body .bleft .ncontent dl dd .dlh .ddtopr{background-position: -117px -864px}
 .n-body .bleft .ncontent dl dd h2 {width:500px;height:50px;margin: 0 auto}
-.n-body .bleft .ncontent dl dd .ddcontent {width:500px;margin:0 auto}
+.n-body .bleft .ncontent dl dd .ddcontent {width:500px;white-space: nowrap;margin:0 auto;overflow:hidden;text-overflow:ellipsis}
 .n-body .bleft .ncontent dl dd .ddbuttom {width:500px;height:30px;margin:0 auto}
 .bleft .ncontetn dl dd .ddbuttom span {float:left;display: block;text-align: left}
 
