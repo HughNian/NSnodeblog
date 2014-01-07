@@ -120,7 +120,7 @@ exports.login = function(req, res, next){
 		if(pass !== user.pass){
 		    return res.render('sign/login', {error: '密码错误'});
 		}
-
+        
 		gen_session(user, req, res);
 		res.redirect('/home');
 	});

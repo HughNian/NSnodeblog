@@ -89,24 +89,6 @@ exports.index = function (req, res, next) {
           
           Articles.getArticles(function(err, articles){
             if(err) return next(err);
-            var proxy = EventProxy.create('is_friend', function(articles){
-                console.log(articles);
-                res.render('index', {
-                  title: config.name,
-                  description: config.description,
-                  is_login: is_login,
-                  userinfo: userinfo,
-                  articles: articles,
-                  haoyou: friends
-                });
-            }).fail(next);
-            for(var i in articles){
-                Friends.hasFriend(userinfo._id, articles[i].author_id, proxy.done( function (ret) {
-                  if(ret) articles[i].is_friend = 1;
-                  proxy.emit('is_friend', articles);
-                }));
-            }
-            /*
             console.log(articles);
             res.render('index',{
                 title: config.name,
@@ -115,7 +97,7 @@ exports.index = function (req, res, next) {
                 userinfo: userinfo,
                 articles: articles,
                 haoyou: friends
-            });*/
+            });
           });
         });
     }

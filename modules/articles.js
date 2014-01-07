@@ -64,6 +64,16 @@ exports.newAndSave = function (data, callback) {
  * 获取所有内容信息
  * 
  */
-exports.getArticles = function (callback) {
-    Articles.find({del_status:{'$ne': 1}}, callback);
+exports.getArticles = function (userId, callback) {
+    Articles.find({del_status:{'$ne':1}}, callback);
+    /*
+    Articles.find({del_status:{'$ne': 1}}, function(articles){
+        for(var i in articles){
+            Friends.hasFriend(userId, articles[i].author_id, function(ret){
+                if(ret) articles[i].is_friend = 1;
+                articles[i].is_friend = 0;
+                callback(articles);
+            });
+        }
+    });*/
 };
