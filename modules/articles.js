@@ -3,18 +3,22 @@
  *
  *
  */
-var EventProxy = require('eventproxy');
+var EventProxy = require('eventproxy'),
+    markdown = require('markdown').markdown,
+    Entities = require('html-entities').AllHtmlEntities;
 
 var models = require('../models'),
-    Articles = models.Articles,
-    Friends = models.Friends;
+    Articles = models.Articles;
+var Util = require('../libs/util');
+var Friends = require('./friends');
+var User = require('./user');
 
 /**
  *  根据内容id获取一篇内容
  *
  *
  */
-exports.getArticleById = function(id , callback) {
+exports.getArticleById = function(id, callback) {
     Articles.findOne({_id:id}, callback);
 };
 
@@ -40,6 +44,7 @@ exports.newAndSave = function (data, callback) {
     articles.video_url = data.video_url;
     articles.music_id = data.music_id;
     articles.music_logo = data.music_logo;
+    articles.create_at = Util.get_time();
     articles.save(callback);
 };
 
@@ -65,15 +70,46 @@ exports.newAndSave = function (data, callback) {
  * 
  */
 exports.getArticles = function (userId, callback) {
-    Articles.find({del_status:{'$ne':1}}, callback);
-    /*
-    Articles.find({del_status:{'$ne': 1}}, function(articles){
-        for(var i in articles){
-            Friends.hasFriend(userId, articles[i].author_id, function(ret){
-                if(ret) articles[i].is_friend = 1;
-                articles[i].is_friend = 0;
-                callback(articles);
-            });
+    //Articles.find({del_status:{'$ne':1}}, callback);
+    Articles.find({del_status:{'$ne':1}}).sort({'create_at':'desc'}).exec(function (err, articles) {
+        if(err) {
+            return callback(err);
         }
-    });*/
+        var ep = EventProxy();
+        ep.after("is_friend", articles.length, function (list) {
+            return callback(null, list);
+        });
+        for(var j = 0; j < articles.length; j++){
+            (function(i){
+                var author_id = articles[i].author_id;
+                Friends.hasFriend(userId, author_id, function (err, ret) {
+                    if(err){
+                        return callback(err);
+                    }
+                    articles[i].is_friend = ret || 0;
+                    //articles[i].content = markdown.toHTML(articles[i].content);
+                    //articles[i].content = decodeHTML(articles[i].content);
+                    
+                    var markdownContent = markdown.toHTML(articles[i].content);//生成markdown格式
+                    var entities = new Entities();
+                    articles[i].content = entities.encode(markdownContent);
+                    
+                    //articles[i].create_at = Util.format_date(articles[i].create_at, true);
+                    User.getUserById(author_id, function(err, userinfo){
+                        if(err){
+                            return callback(err);
+                        }
+                        articles[i].avatar = userinfo.avatar;
+                        ep.emit("is_friend", articles[i]);//尼玛这个地方肯爹呢，不能全传articles 只能一个一个的传所以传入articles[i]
+                    });
+                });
+            })(j);
+        }
+    });
 };
+
+//private
+function decodeHTML(text){
+    text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    return text;
+}

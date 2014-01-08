@@ -190,6 +190,8 @@ span.emotion:hover{background-position:2px -28px}
 .fr {float: right; display: block}
 .facefriend {background-position:-410px -115px}
 .facefriend:hover {background-position:-408px -113px}
+.delfriend {background-position: -524px -110px}
+.delfriend:hover {background-position: -523px -109px}
 .grayborder {border:1px solid #C3C3C5}
 .bluea {font-size:18px;color:#437272}
 .bluea:hover {color:#5F83A8;}

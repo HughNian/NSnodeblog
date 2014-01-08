@@ -86,19 +86,19 @@ exports.index = function (req, res, next) {
           if(err){
               return next(err);
           }
-          
-          Articles.getArticles(function(err, articles){
-            if(err) return next(err);
-            console.log(articles);
+          ep = new EventProxy.create('get_article', function(articles){
             res.render('index',{
-                title: config.name,
-                description: config.description,
-                is_login: is_login,
-                userinfo: userinfo,
-                articles: articles,
-                haoyou: friends
+              title: config.name,
+              description: config.description,
+              is_login: is_login,
+              userinfo: userinfo,
+              articles: articles,
+              haoyou: friends
             });
-          });
+          }).fail(next);
+          Articles.getArticles(userinfo._id, ep.done(function (articles) {
+            ep.emit('get_article', articles);
+          }));
         });
     }
 }
