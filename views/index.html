@@ -3,11 +3,13 @@
   <!-- left -->
   <div class="bleft fl">
     <div class="ntoolbar">
-      <a href="http://en.gravatar.com/" target="_blank" class="pbg tavatar">
-        <% if(userinfo.avatar){ %>
-          <img id="avatar" src="<%= userinfo.avatar%>" alt="<%= userinfo.name %>">
-        <% } %>
-      </a>
+      <% if(userinfo.avatar) { %>
+        <a href="http://en.gravatar.com/" target="_blank" class="tavatar pbg" title="头像" alt="头像">
+          <img id="avatar" src="<%= userinfo.avatar%>" alt="<%= userinfo.name %>" style="display: inline;">
+        </a>
+      <% } else { %>
+        <a href="http://en.gravatar.com/" target="_blank" class="pbg tavatar"></a>
+      <% } %>
       <a href="/publish/index/word" class="pbg word"></a>
       <a href="/publish/index/pic" class="pbg pic"></a>
       <a href="/publish/index/music" class="pbg music"></a>
@@ -22,7 +24,7 @@
           <img src="<%= articles.avatar %>" width="80" height="80">
           <% if (userinfo._id != articles.author_id) { %>
           <div class="addfriend">
-            <a href="javascript:;" data-user="<%= articles.author_id%>" title="加好友" <% if(articles.is_friend == 1) { %>class="delfriend pbg" <% } else { %>class="facefriend pbg"<% } %>></a>
+            <a href="javascript:;" data-user="<%= articles.author_id%>" title="加关注" <% if(articles.is_friend == 1) { %>class="delfriend pbg" <% } else { %>class="facefriend pbg"<% } %>></a>
           </div>
           <% } %>
         </dt>
@@ -38,7 +40,7 @@
                  <img src="<%= articles.music_logo%>">
                  <embed src="http://img.xiami.com/res/player/widget/singlePlayer.swf?dataUrl=http://www.xiami.com/widget/xml-single/uid/0/sid/<%= articles.music_id %>" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
             <% } else { %>
-                <%= articles.content %>
+                <%- articles.content %>
             <% } %>
           </div>
           <div class="ddbuttom">
@@ -58,6 +60,14 @@
         </dl>
       <% } %>
     </div>
+    
+    <!-- 分页 -->
+    <div class="page clearfix">
+      <span>共<b class="ftblue">117</b>篇，当前<b class="ftblue">1/12</b>页</span>
+      <a href="/home/index/page/2/next/52bd2d5b62bcd7611d000021" class="pbg">下一页</a>
+      <a href="javascript:;" class="pbg dis">上一页</a>
+    </div>
+    <!-- 分页 -->
   </div>
 
   <!-- right -->
@@ -71,6 +81,7 @@
   </div>
 </div>
 <%- include footer.html %>
+<script src="/js/base.js"></script>
 <script type="text/javascript">
   $("dd").mouseover(function(){
     $(this).find(".ddtop").attr("class", "pbg dlh ddtop");
@@ -84,19 +95,41 @@
   $(".blacka").mouseout(function(){
     $(this).animate({"opacity":0.4}, 250);
   });
-  
-  //加好友
+  $(".tavatar").mouseover(function(){
+    $("#avatar").css({'display':'none'});
+  });
+  $(".tavatar").mouseout(function(){
+    $("#avatar").css({'display':'inline'});
+  });
+
+  //加关注
   $(".facefriend").click(function(){
     var add_user = $(this).attr('data-user');
     $.get('/addfriend?add_user='+add_user, function(ret){
-      console.log(ret);
+      var result = eval('('+ret+')');
+      base.tip('<span class="pbg tipres tiperr">'+result.msg+'</span>');
+    });
+  });
+  
+  //取消关注
+  $(".delfriend").click(function(){
+    var add_user = $(this).attr('data-user');
+    $.get('/delfriend?del_user='+add_user, function(ret){
+      var result = eval('('+ret+')');
+      base.tip('<span class="pbg tipres tiperr">'+result.msg+'</span>');
+    });
+  });
+
+  $('document').ready(function(){
+    $(".ddcontent").each(function(i){
+      var content = $(this).html();
+          //content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+          decodeHTML(content);
     });
   });
 
   function decodeHTML(text){
-    console.log(text);
-    //text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-    //console.log(text);
+    text.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
     return text;
   }
 </script>

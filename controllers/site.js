@@ -120,7 +120,7 @@ exports.friends = function(req, res, next) {
 }
 
 /**
- * 加为好友
+ * 加关注
  *
  */
 exports.addfriend = function(req, res, next) {
@@ -128,23 +128,50 @@ exports.addfriend = function(req, res, next) {
   var oUrl = url.parse(req.url, true),
       addUserId = oUrl.query.add_user,
       userId = userinfo._id;
-  Friends.hasFriend(userId, addUserId, function (ret) {
-    var redirect = {};
-    if(ret) result = "{ret:false, msg:'已经是好友了'}";
-    res.send(result);
-    return;
+  Friends.hasFriend(userId, addUserId, function (err, ret) {
+    if(err){
+       return next(err);
+    }
+    var result = {};
+    if(ret) {
+      result = "{ret:false, msg:'已经关注了该用户'}";
+      res.send(result);
+      return;
+    }
     var proxy = EventProxy.create('get_friend_name', 'add_friend', function () {
-      result = "{ret:true, msg:'添加成功'}";
+      result = "{ret:true, msg:'关注成功'}";
       res.send(result);
     }).fail(next);
     User.getUserById(addUserId, proxy.done(function (friend) {
       var friendNmae = friend.name;
       proxy.emit('get_friend_name');
-        Friends.addFriend(userId, addUserId, friendNmae, proxy.done(function () {
-          proxy.emit('add_friend');
-        }));
+        Friends.addFriend(userId, addUserId, friendNmae, proxy.done("add_friend"));
     }));
   });
+}
+
+/**
+ * 取消关注
+ *
+ */
+exports.delfriend = function (req, res, next){
+  var userinfo = req.session.user;
+  var oUrl = url.parse(req.url, true),
+      addUserId = oUrl.query.del_user,
+      userId = userinfo._id;
+  var result = {};
+  var proxy = EventProxy.create('del_friend', function () {
+    result = "{ret:true, msg:'取消成功'}";
+    res.send(result);
+  }).fail(next);
+  Friends.removeFriend(userId, addUserId, proxy.done('del_friend'));
+}
+
+/**
+ * 404页面
+ */
+exports.notfind = function (req, res) {
+    res.render("404", {title: "Nsnodeblog 帮助寻人"});
 }
 
 //private

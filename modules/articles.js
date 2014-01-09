@@ -5,6 +5,7 @@
  */
 var EventProxy = require('eventproxy'),
     markdown = require('markdown').markdown,
+    marked = require('marked'),
     Entities = require('html-entities').AllHtmlEntities;
 
 var models = require('../models'),
@@ -12,6 +13,18 @@ var models = require('../models'),
 var Util = require('../libs/util');
 var Friends = require('./friends');
 var User = require('./user');
+
+// Set default options
+marked.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  codeClass: 'prettyprint',
+  langPrefix: 'language-'
+});
 
 /**
  *  根据内容id获取一篇内容
@@ -71,6 +84,50 @@ exports.newAndSave = function (data, callback) {
  */
 exports.getArticles = function (userId, callback) {
     //Articles.find({del_status:{'$ne':1}}, callback);
+    /*
+    var ep = EventProxy();
+    var query = "{del_status:{'$ne':1}}";
+    var ep = all('get_count', 'get_data', function (count, articles){
+        ep.after("is_friend", articles.length, function (list) {
+            return callback(null, list);
+        });
+        for(var j = 0; j < articles.length; j++){
+            (function(i){
+                var author_id = articles[i].author_id;
+                Friends.hasFriend(userId, author_id, function (err, ret) {
+                    if(err){
+                        return callback(err);
+                    }
+                    articles[i].is_friend = ret || 0;
+                    articles[i].total = count;                    
+                    articles[i].content = Util.xss(marked(articles[i].content));//生成markdown格式,同时要用xss转义输出安全输出内容
+
+                    /*
+                    var markdownContent = marked.toHTML(articles[i].content);
+                    var entities = new Entities();
+                    articles[i].content = entities.encode(markdownContent);
+                    */
+                    //articles[i].create_at = Util.format_date(articles[i].create_at, true);
+                    /*
+                    User.getUserById(author_id, function(err, userinfo){
+                        if(err){
+                            return callback(err);
+                        }
+                        articles[i].avatar = userinfo.avatar;
+                        ep.emit("is_friend", articles[i]);//尼玛这个地方肯爹呢，不能全传articles 只能一个一个的传所以传入articles[i]
+                    });
+                });
+            })(j);
+        }
+    }).fail(callback(err));
+    Articles.count(query, ep.done(function (count){
+        ep.emit("get_count", count);
+    }));
+    Articles.find(query, {skip: (page - 1)*10,limit: 10}, {sort: [['create_at', 'desc']]}, ep.done(function (articles){
+        ep.emit("get_data", articles);
+    }));*/
+
+    /*    
     Articles.find({del_status:{'$ne':1}}).sort({'create_at':'desc'}).exec(function (err, articles) {
         if(err) {
             return callback(err);
@@ -87,14 +144,15 @@ exports.getArticles = function (userId, callback) {
                         return callback(err);
                     }
                     articles[i].is_friend = ret || 0;
-                    //articles[i].content = markdown.toHTML(articles[i].content);
-                    //articles[i].content = decodeHTML(articles[i].content);
                     
-                    var markdownContent = markdown.toHTML(articles[i].content);//生成markdown格式
+                    articles[i].content = Util.xss(marked(articles[i].content));//生成markdown格式,同时要用xss转义输出安全输出内容
+                    /*
+                    var markdownContent = marked.toHTML(articles[i].content);
                     var entities = new Entities();
                     articles[i].content = entities.encode(markdownContent);
-                    
+                    */
                     //articles[i].create_at = Util.format_date(articles[i].create_at, true);
+                    /*
                     User.getUserById(author_id, function(err, userinfo){
                         if(err){
                             return callback(err);
@@ -105,7 +163,7 @@ exports.getArticles = function (userId, callback) {
                 });
             })(j);
         }
-    });
+    });*/
 };
 
 //private

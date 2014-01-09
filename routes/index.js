@@ -16,8 +16,10 @@ module.exports = function(app) {
     app.get('/home', site.index);
     //ajax获取好友
     app.get('/friends', site.friends);
-    //ajaxt添加好友
+    //ajax关注
     app.get('/addfriend', site.addfriend);
+    //ajax取消关注
+    app.get('/delfriend', site.delfriend);
     //ajax保存聊天记录
     app.post('/setchats', chats.setchats);
     //ajax获取聊天纪录
@@ -40,4 +42,7 @@ module.exports = function(app) {
     app.post('/publish/index/pic', article.publish);
     app.post('/publish/index/music', article.publish);
     app.post('/publish/index/video', article.publish);
+
+    //404页面
+    app.get('*', site.notfind);
 };
