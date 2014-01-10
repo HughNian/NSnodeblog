@@ -183,7 +183,7 @@ span.emotion:hover{background-position:2px -28px}
 .headbar .top-box .top-nav .navsetting:hover {background-position: -182px -60px}
 .headbar .top-box .top-nav .navlogout:hover {background-position: 0 -60px}
 
-.n-body {width:930px;margin: 35px auto}
+/** 灵活调用样式 **/
 .clearfix {zoom:1}
 .disnone {display:none}
 .fl {float: left; display: block}
@@ -194,17 +194,21 @@ span.emotion:hover{background-position:2px -28px}
 .delfriend:hover {background-position: -523px -109px}
 .grayborder {border:1px solid #C3C3C5}
 .bluea {font-size:18px;color:#437272}
-.bluea:hover {color:#5F83A8;}
+.bluea:hover {color:#5F83A8}
 .gray {font-size:12px;color:#CCC}
-.gray:hover {text-decoration: line;}
+.gray:hover {text-decoration: line}
 .like {width:15px;height:22px;background-position:-182px -111px;padding-left:14px;font-size: 12px}
 .like:hover{background-position: -237px -111px}
+.ftblue {color:#437272}
 
+/** 提示框 **/
 .tipres {display: inline-block;padding-left: 30px;height: 24px;line-height: 24px;margin-top: 20px}
+.tipsuc {background-position: -797px -439px}
 .tiperr {background-position: -797px -465px}
 .baseTip {display: none;position: fixed;top: -10px;left: 0;width: 100%;height: 25px;z-index: 99;text-align: center}
 .baseTip .btBox {border: #555 10px solid;line-height: 80px;padding: 10px 15px;background-color: #F9FBD4;width: 300px;display: inline-block;font-size: 22px;font-family: Microsoft YaHei, "微软雅黑", tahoma, arial, simhei, "黑体";color: #555}
 
+.n-body {width:930px;margin: 35px auto}
 .n-body .bleft {width:670px}
 .n-body .bleft .ntoolbar {width:671px;height:115px;margin-bottom:20px;border-right:1px solid #E2E2E2}
 .n-body .bleft .ntoolbar a {width:140px;height: 115px;float: left;padding: 0;margin: 0;cursor: pointer;display: block}
@@ -232,7 +236,11 @@ span.emotion:hover{background-position:2px -28px}
 .n-body .bleft .ncontent dl dd .ddcontent {width:500px;white-space: nowrap;margin:0 auto;overflow:hidden;text-overflow:ellipsis}
 .n-body .bleft .ncontent dl dd .ddbuttom {width:500px;height:30px;margin:0 auto}
 .n-body .bleft .ncontetn dl dd .ddbuttom span {float:left;display: block;text-align: left}
-.n-body .bleft .page {width:569px;float:left}
+.n-body .bleft .page {width:569px;float:right}
+.n-body .bleft .page a {float:right;width:104px;height:40px;color:#fff;text-align:center;line-height:40px;background-position:-605px -759px;cursor: pointer;margin-left: 20px;font-size: 16px}
+.n-body .bleft .page a:hover {text-decoration: none; background-position: -719px -759px}
+.n-body .bleft .page .dis {background-position: -605px -859px}
+.n-body .bleft .page .dis:hover {background-position: -605px -859px}
 
 .n-body .bright {width:223px;display:block}
 .n-body .bright .prLove {background-position: -663px -963px;width: 223px}

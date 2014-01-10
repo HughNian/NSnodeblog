@@ -12,8 +12,8 @@ var config = require('../config').config,
     EventProxy = require('eventproxy');
 
 exports.index = function (req, res, next) {
-	  //var oUrl = url.parse(req.url, true)
-    //var is_login = oUrl.query.is_login ?  oUrl.query.is_login : 0;
+	  var oUrl = url.parse(req.url, true)
+    var page = oUrl.query.page ?  oUrl.query.page : 1;
     if(!req.session.user) res.redirect('/');//如果没有登录返回登录界面首页
     var cookies = {};
     req.headers.cookie && req.headers.cookie.split(';').forEach(function( cookie ) {
@@ -86,18 +86,22 @@ exports.index = function (req, res, next) {
           if(err){
               return next(err);
           }
-          ep = new EventProxy.create('get_article', function(articles){
+          ep = new EventProxy.create('get_article', 'friends_num', function (articles, num) {
             res.render('index',{
               title: config.name,
               description: config.description,
               is_login: is_login,
               userinfo: userinfo,
               articles: articles,
-              haoyou: friends
+              haoyou: friends,
+              friends_num: num
             });
           }).fail(next);
-          Articles.getArticles(userinfo._id, ep.done(function (articles) {
+          Articles.getArticles(userinfo._id, page, ep.done(function (articles) {
             ep.emit('get_article', articles);
+          }));
+          Friends.getFriendsNum(userinfo._id, ep.done(function (num) {
+            ep.emit('friends_num', num);
           }));
         });
     }

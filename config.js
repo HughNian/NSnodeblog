@@ -21,7 +21,7 @@ exports.config = {
   port: 3000,
 
   //列表显示文章个数
-  articles_count: 20,
+  articles_count: 10,
   
   //虾米music api
   xiami:"www.xiami.com",

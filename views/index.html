@@ -62,11 +62,21 @@
     </div>
     
     <!-- 分页 -->
+    <% if(articles != ""){ %>
     <div class="page clearfix">
-      <span>共<b class="ftblue">117</b>篇，当前<b class="ftblue">1/12</b>页</span>
-      <a href="/home/index/page/2/next/52bd2d5b62bcd7611d000021" class="pbg">下一页</a>
-      <a href="javascript:;" class="pbg dis">上一页</a>
+      <span>共<b class="ftblue"><%= articles.total %></b>篇，当前<b class="ftblue"><%= articles.page %>/<%= articles.pages %></b>页</span>
+      <% if(articles.page == 1 && articles.pages > 1) { %>
+        <a href='/home?page=<%= articles.page + 1 %>' class="pbg">下一页</a>
+        <a href="javascript:;" class="pbg dis">上一页</a>
+      <% } else if(articles.page > 1 && articles.pages > 1 && articles.page < articles.pages) { %>
+        <a href='/home?page=<%= articles.page + 1 %>' class="pbg">下一页</a>
+        <a href='/home?page=<%= articles.page - 1 %>' class="pbg">上一页</a>
+      <% } else if(articles.page == articles.pages &&  articles.pages > 1) { %>
+        <a href="javascript:;" class="pbg dis">下一页</a>
+        <a href='/home?page=<%= articles.page - 1 %>' class="pbg">上一页</a>
+      <% } %>
     </div>
+    <% } %>
     <!-- 分页 -->
   </div>
 
@@ -76,7 +86,7 @@
       <a href="/content/mylove" class="pbg">您喜欢了2篇文章</a><a href="/content/explorer/" class="blacka alpha2" style="opacity: 0.4;">去发现好文章</a>
     </div>
     <div class="pbg prLove prfriend grayborder">
-      <a href="/friends/index" class="pbg">您关注了9位朋友</a><a href="/friends/explorer" class="blacka alpha2" style="opacity: 0.4;">去结交新朋友</a>
+      <a href="/friends/index" class="pbg">您关注了<%= friends_num %>位朋友</a><a href="/friends/explorer" class="blacka alpha2" style="opacity: 0.4;">去结交新朋友</a>
     </div>
   </div>
 </div>
@@ -107,7 +117,11 @@
     var add_user = $(this).attr('data-user');
     $.get('/addfriend?add_user='+add_user, function(ret){
       var result = eval('('+ret+')');
-      base.tip('<span class="pbg tipres tiperr">'+result.msg+'</span>');
+      if(result.ret == true){
+        base.tip('<span class="pbg tipres tipsuc">'+result.msg+'</span>');
+      } else if (result.ret == false){
+        base.tip('<span class="pbg tipres tiperr">'+result.msg+'</span>');
+      }
     });
   });
   
@@ -116,7 +130,11 @@
     var add_user = $(this).attr('data-user');
     $.get('/delfriend?del_user='+add_user, function(ret){
       var result = eval('('+ret+')');
-      base.tip('<span class="pbg tipres tiperr">'+result.msg+'</span>');
+      if(result.ret == true){
+        base.tip('<span class="pbg tipres tipsuc">'+result.msg+'</span>');
+      } else if (result.ret == false){
+        base.tip('<span class="pbg tipres tiperr">'+result.msg+'</span>');
+      }
     });
   });
 

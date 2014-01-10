@@ -15,7 +15,7 @@ exports.getFriendsId = function(userId, callback){
 exports.addFriend = function(userId, friendsId, friendsName, callback){
 	var ep = EventProxy.create('friend_exists', function (ret){
 		if(ret) {
-			Friends.update({user_id:userId, friend_uid:friendsId}, {status:1}, callback);//再次关注
+			exports.reAddFriend(userId, friendsId, callback);//再次关注
 		} else {
 			var friends = new Friends;
 			friends.user_id = userId;
@@ -25,7 +25,7 @@ exports.addFriend = function(userId, friendsId, friendsName, callback){
 			friends.save(callback);
 		}
 	}).fail(callback);
-	this.friendexists(userId, friendsId, ep.done(function (ret){
+	exports.friendexists(userId, friendsId, ep.done(function (ret){
 		ep.emit('friend_exists', ret);
 	}));
 };
@@ -51,4 +51,19 @@ exports.friendexists = function(userId, friendsId, callback){
  */
 exports.removeFriend = function(userId, friendsId, callback){
 	Friends.update({user_id:userId, friend_uid:friendsId}, {status:0}, callback);
+}
+
+/**
+ * 再次关注
+ */
+exports.reAddFriend = function(userId, friendsId, callback){
+	Friends.update({user_id:userId, friend_uid:friendsId}, {status:1}, callback);
+}
+
+/**
+ * 获取某个用户关注好友个数
+ *
+ */
+exports.getFriendsNum = function(userId, callback){
+	Friends.count({user_id:userId, status:1}, callback);
 }
